@@ -41,6 +41,7 @@ using System.Collections.Specialized;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -51,10 +52,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 1.5f;
     Vector3 velocity;
+    Vector2 movementRcvd;
     bool isGrounded;
 
     float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
+    
 
     // Update is called once per frame
     void Update()
@@ -63,17 +66,16 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && transform.position.y <= 1.6f)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-        }
-        //gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        //walk
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+
+    void FixedUpdate(){
+        MovePlayer();
+    }
+
+    void MovePlayer(){
+        Vector3 direction = new Vector3(movementRcvd.x, 0f, movementRcvd.y).normalized;
 
         if(direction.magnitude >= 0.1f)
         {
@@ -83,6 +85,17 @@ public class ThirdPersonMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
+    }
+
+    void OnMove(InputValue input){
+        movementRcvd = input.Get<Vector2>();
+    }
+
+    void OnJump(InputValue input){
+        if (transform.position.y <= 1.6f)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
     }
 }
