@@ -1,8 +1,17 @@
 fileFormatVersion: 2
-guid: f46ac4d9dd5f3984b8e8ef1733bf7ab0
+guid: e602f3597bd31824a84f77ab2bdb6fdc
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 2073693694548410006
+    second: Armature.001|Armature.001|mixamo.com|Layer0
+  - first:
+      74: -6734315199927337518
+    second: Armature.001|Armature|mixamo.com|Layer0
+  - first:
+      74: 4061969974825801104
+    second: Armature.001|Idle 2
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -73,7 +82,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
