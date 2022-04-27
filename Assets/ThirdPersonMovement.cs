@@ -93,7 +93,7 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     void OnJump(InputValue input){
-        if (transform.position.y <= 1.6f)
+        if (transform.position.y <= 1.9f)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
