@@ -54,10 +54,16 @@ public class ThirdPersonMovement : MonoBehaviour
     Vector3 velocity;
     Vector2 movementRcvd;
     bool isGrounded;
-
+    
     float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
-    
+    Animator playerAnimator;
+
+    void Start(){
+        playerAnimator = GetComponentInChildren<Animator>();
+        playerAnimator.SetBool("is_running", false);
+        playerAnimator.SetBool("is_shooting", false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -88,8 +94,29 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    void OnFire(InputValue input){
+
+        if(input.Get() != null){
+            //Debug.Log("Estou a disparar");
+            playerAnimator.SetBool("is_shooting", true);
+        }
+        else{
+            //Debug.Log("Parei de disparar");
+            playerAnimator.SetBool("is_shooting", false);
+        }
+    }
+
     void OnMove(InputValue input){
         movementRcvd = input.Get<Vector2>();
+        //Debug.Log(movementRcvd);
+        if(movementRcvd.x == 0 && movementRcvd.y == 0){
+            //Debug.Log("Parei de correr");
+            playerAnimator.SetBool("is_running", false);
+        }
+        else{
+            //Debug.Log("Comecei a correr");
+            playerAnimator.SetBool("is_running", true);
+        }
     }
 
     void OnJump(InputValue input){
