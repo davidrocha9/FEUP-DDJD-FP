@@ -18,6 +18,9 @@ ModelImporter:
   - first:
       74: -5717071178278073279
     second: Armature|StopRun
+  - first:
+      74: 4521638917784404211
+    second: Armature|Firing
   externalObjects: {}
   materials:
     materialImportMode: 2
