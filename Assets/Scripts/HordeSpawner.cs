@@ -42,7 +42,7 @@ public class HordeSpawner : MonoBehaviour
         {
             float x = Random.Range(xLimits[0], xLimits[1]);
             float z = Random.Range(zLimits[0], zLimits[1]);
-            Vector3 position = new Vector3(x, 10, z);
+            Vector3 position = new Vector3(x, 1, z);
             GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
             enemy.transform.SetParent(enemiesHolder.transform);
         }

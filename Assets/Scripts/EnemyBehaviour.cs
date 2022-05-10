@@ -14,7 +14,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = GameObject.Find("Third Person Player").transform;
+        playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponent<Animator>();
     }
 
