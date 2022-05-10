@@ -46,6 +46,9 @@ using UnityEngine.InputSystem;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
+
+    private Rigidbody body;
+
     public Transform cam;
 
     public float speed = 6;
@@ -63,6 +66,7 @@ public class ThirdPersonMovement : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
         playerAnimator.SetBool("is_running", false);
         playerAnimator.SetBool("is_shooting", false);
+        body = GetComponentInChildren<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -82,6 +86,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void MovePlayer(){
         Vector3 direction = new Vector3(movementRcvd.x, 0f, movementRcvd.y).normalized;
+
+        //body.AddForce(direction);
 
         if(direction.magnitude >= 0.1f)
         {
