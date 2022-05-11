@@ -15,6 +15,8 @@ public class HordeSpawner : MonoBehaviour
     Vector2 xLimits = new Vector2(-95, 95);
     Vector2 zLimits = new Vector2(-95, 95);
 
+    public bool active;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,7 @@ public class HordeSpawner : MonoBehaviour
 
     void FixedUpdate()
     {
-        if ( (Time.time - startTime) >= 5 ){
+        if ( (Time.time - startTime) >= 5 && active){
             startTime = Time.time;
             SpawnHorde(5);
         }

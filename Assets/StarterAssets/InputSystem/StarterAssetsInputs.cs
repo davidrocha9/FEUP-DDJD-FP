@@ -11,7 +11,10 @@ namespace StarterAssets
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
-		public bool sprint;
+
+		public bool aim;
+
+		public bool fire;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -39,10 +42,16 @@ namespace StarterAssets
 			JumpInput(value.isPressed);
 		}
 
-		public void OnSprint(InputValue value)
+		public void OnAim(InputValue value)
 		{
-			SprintInput(value.isPressed);
+			AimInput(value.isPressed);
 		}
+
+		public void OnFire(InputValue value)
+		{
+			FireInput(value.isPressed);
+		}
+
 #endif
 
 
@@ -61,9 +70,14 @@ namespace StarterAssets
 			jump = newJumpState;
 		}
 
-		public void SprintInput(bool newSprintState)
+		public void AimInput(bool newAimState)
 		{
-			sprint = newSprintState;
+			aim = newAimState;
+		}
+
+		public void FireInput(bool newFireState)
+		{
+			fire = newFireState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)

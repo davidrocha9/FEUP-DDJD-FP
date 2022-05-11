@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
+using Cinemachine;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -27,6 +28,8 @@ namespace StarterAssets
 
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
+
+        public float sensitivity = 1f;
 
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
@@ -92,11 +95,12 @@ namespace StarterAssets
         private float _fallTimeoutDelta;
 
         // animation IDs
-        private int _animIDSpeed;
         private int _animIDGrounded;
         private int _animIDJump;
         private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
+        private int _animIDRun;
+        private int _animIDShoot;
+        
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -106,9 +110,21 @@ namespace StarterAssets
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
+        [SerializeField]
+        private CinemachineVirtualCamera aimCamera;
+
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+
+        private bool rotateWhenMoving = true;
+
+        private bool canFire = true;
+        private float fireTimer = 0f;
+
+        private Vector2 screenCenter;
+
+        [SerializeField] LayerMask aimColliderMask = new LayerMask();
 
         private bool IsCurrentDeviceMouse
         {
@@ -125,6 +141,9 @@ namespace StarterAssets
 
         private void Awake()
         {
+
+            screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -159,6 +178,17 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Aim();
+            Fire();
+
+            if (!canFire){
+                fireTimer += Time.deltaTime;
+                if (fireTimer >= 0.2f){
+                    
+                    canFire = true;
+                    fireTimer = 0;
+                }
+            }
         }
 
         private void LateUpdate()
@@ -168,11 +198,11 @@ namespace StarterAssets
 
         private void AssignAnimationIDs()
         {
-            _animIDSpeed = Animator.StringToHash("Speed");
             _animIDGrounded = Animator.StringToHash("Grounded");
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDRun = Animator.StringToHash("Run");
+            _animIDShoot = Animator.StringToHash("Shoot");
         }
 
         private void GroundedCheck()
@@ -198,8 +228,8 @@ namespace StarterAssets
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -214,7 +244,7 @@ namespace StarterAssets
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed =  SprintSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -261,7 +291,9 @@ namespace StarterAssets
                     RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
-                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                if (rotateWhenMoving){
+                    transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                }
             }
 
 
@@ -274,8 +306,67 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                if (_animationBlend >= 1)
+                {
+                    //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
+                    _animator.SetBool(_animIDRun, true);
+                }
+                else {
+                    //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
+                    _animator.SetBool(_animIDRun, false);
+                }
+                
+                //_animator.SetFloat(_animIDSpeed, _animationBlend);
+                //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            }
+        }
+
+        private void Aim()
+        {
+            if (_input.aim) {
+                sensitivity = 0.5f;
+                aimCamera.gameObject.SetActive(true);
+                rotateWhenMoving = false;
+
+                Vector3 mouseGlobalPosition = Vector3.zero;
+
+                // Rotate the player to face where he is aiming
+                Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                    mouseGlobalPosition = hit.point;
+                }
+
+                //Vector3 aimTarget = mouseGlobalPosition;
+                //aimTarget.y = transform.position.y;
+                mouseGlobalPosition.y = transform.position.y;
+                Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
+
+                transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
+
+            } else {
+                sensitivity = 1f;
+                aimCamera.gameObject.SetActive(false);
+                rotateWhenMoving = true;
+            }
+        }
+
+        private void Fire()
+        {
+            
+            if (_input.fire && canFire) {
+                canFire = false;
+                Debug.Log("Fire");
+                Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                    if (hit.transform.name == "Robot_Animated_basic"){
+                        EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
+                        if (enemy != null){
+                            enemy.TakeDamage(20);
+                        }
+                    }
+                }
             }
         }
 

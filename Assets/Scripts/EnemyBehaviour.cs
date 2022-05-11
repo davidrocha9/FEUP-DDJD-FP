@@ -11,6 +11,8 @@ public class EnemyBehaviour : MonoBehaviour
     //float offset;
     Vector3 offset;
 
+    public int health = 100;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,10 +39,27 @@ public class EnemyBehaviour : MonoBehaviour
         } else {
             animator.SetBool("is_running", false);
             animator.SetBool("is_attacking", true);
-            Debug.Log("Attacking");
-
         }
 
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Finished")){
+            Destroy(this.gameObject);
+        }
 
     }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if (health <= 0){
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        moveSpeed = 0;
+        animator.SetBool("is_dead", true);
+    }
+
 }
