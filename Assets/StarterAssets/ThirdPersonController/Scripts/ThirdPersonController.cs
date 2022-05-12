@@ -327,7 +327,7 @@ namespace StarterAssets
                 SprintSpeed = 2.0f;
                 sensitivity = 0.5f;
                 aimCamera.gameObject.SetActive(true);
-                _animator.SetBool(_animIDShoot, true);
+                //_animator.SetBool(_animIDShoot, true);
                 _animator.SetBool(_animIDRun, false);
                 rotateWhenMoving = false;
 
@@ -340,10 +340,7 @@ namespace StarterAssets
                     mouseGlobalPosition = hit.point;
                 }
 
-                //Vector3 aimTarget = mouseGlobalPosition;
-                //aimTarget.y = transform.position.y;
                 mouseGlobalPosition.y = transform.position.y;
-                //mouseGlobalPosition.x += 20f;
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
 
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
@@ -352,7 +349,7 @@ namespace StarterAssets
                 SprintSpeed = 5.335f;
                 sensitivity = 1f;
                 aimCamera.gameObject.SetActive(false);
-                _animator.SetBool(_animIDShoot, false);
+                //_animator.SetBool(_animIDShoot, false);
                 //_animator.SetBool(_animIDRun, true);
                 rotateWhenMoving = true;
             }
@@ -361,19 +358,38 @@ namespace StarterAssets
         private void Fire()
         {
             
-            if (_input.fire && canFire) {
-                canFire = false;
-                Debug.Log("Fire");
+            if (_input.fire) {
+                rotateWhenMoving = false;
+
+                Vector3 mouseGlobalPosition = Vector3.zero;
+
+                // Rotate the player to face where he is aiming
                 Ray ray = Camera.main.ScreenPointToRay(screenCenter);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
-                    if (hit.transform.name == "Robot_Animated_basic"){
-                        EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
-                        if (enemy != null){
-                            enemy.TakeDamage(20);
+                    mouseGlobalPosition = hit.point;
+                }
+                
+                mouseGlobalPosition.y = transform.position.y;
+                Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
+
+                transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
+                _animator.SetBool(_animIDShoot, true);
+                if(canFire){
+                    canFire = false;
+                    if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                        if (hit.transform.name == "Robot_Animated_basic"){
+                            EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
+                            if (enemy != null){
+                                enemy.TakeDamage(20);
+                            }
                         }
                     }
                 }
+            }
+            else{
+                rotateWhenMoving = true;
+                _animator.SetBool(_animIDShoot, false);
             }
         }
 
