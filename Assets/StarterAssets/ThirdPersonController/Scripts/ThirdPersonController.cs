@@ -324,8 +324,11 @@ namespace StarterAssets
         private void Aim()
         {
             if (_input.aim) {
+                SprintSpeed = 2.0f;
                 sensitivity = 0.5f;
                 aimCamera.gameObject.SetActive(true);
+                _animator.SetBool(_animIDShoot, true);
+                _animator.SetBool(_animIDRun, false);
                 rotateWhenMoving = false;
 
                 Vector3 mouseGlobalPosition = Vector3.zero;
@@ -340,13 +343,17 @@ namespace StarterAssets
                 //Vector3 aimTarget = mouseGlobalPosition;
                 //aimTarget.y = transform.position.y;
                 mouseGlobalPosition.y = transform.position.y;
+                //mouseGlobalPosition.x += 20f;
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
 
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
 
             } else {
+                SprintSpeed = 5.335f;
                 sensitivity = 1f;
                 aimCamera.gameObject.SetActive(false);
+                _animator.SetBool(_animIDShoot, false);
+                //_animator.SetBool(_animIDRun, true);
                 rotateWhenMoving = true;
             }
         }
