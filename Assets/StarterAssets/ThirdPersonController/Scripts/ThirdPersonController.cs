@@ -384,6 +384,12 @@ namespace StarterAssets
                                 enemy.TakeDamage(20);
                             }
                         }
+                        if(hit.transform.name == "target_test"){
+                            TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
+                            if (target != null){
+                                target.TakeDamage(20);
+                            }
+                        }
                     }
                 }
             }
