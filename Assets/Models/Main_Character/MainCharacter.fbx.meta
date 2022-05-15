@@ -30,6 +30,18 @@ ModelImporter:
   - first:
       74: 6336993096323798970
     second: Armature|standShooting
+  - first:
+      74: -3047438984176524083
+    second: Armature|aimingshooting
+  - first:
+      74: 3899986803896685499
+    second: Armature|Aimwalk
+  - first:
+      74: 3649519150315028757
+    second: Armature|fall
+  - first:
+      74: 3804670458474611499
+    second: Armature|StopRun.001
   externalObjects: {}
   materials:
     materialImportMode: 2

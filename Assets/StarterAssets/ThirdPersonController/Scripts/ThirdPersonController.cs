@@ -44,7 +44,7 @@ namespace StarterAssets
 
         [Space(10)]
         [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-        public float JumpTimeout = 1.0f;
+        public float JumpTimeout = 0.5f;
 
         [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
         public float FallTimeout = 0.15f;
@@ -327,8 +327,7 @@ namespace StarterAssets
                 SprintSpeed = 2.0f;
                 sensitivity = 0.5f;
                 aimCamera.gameObject.SetActive(true);
-                //_animator.SetBool(_animIDShoot, true);
-                _animator.SetBool(_animIDRun, false);
+                //_animator.SetBool(_animIDRun, false);
                 rotateWhenMoving = false;
 
                 Vector3 mouseGlobalPosition = Vector3.zero;
@@ -344,11 +343,14 @@ namespace StarterAssets
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
 
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
+                
+                _animator.SetBool("Aiming", true);
 
             } else {
                 SprintSpeed = 5.335f;
                 sensitivity = 1f;
                 aimCamera.gameObject.SetActive(false);
+                _animator.SetBool("Aiming", false);
                 //_animator.SetBool(_animIDShoot, false);
                 //_animator.SetBool(_animIDRun, true);
                 rotateWhenMoving = true;
@@ -422,14 +424,19 @@ namespace StarterAssets
                 // Jump
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
+                    
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    
                     
                     if (_hasAnimator)
                     {
+                        if(_animator.GetBool("Aiming")) _input.jump = false;
                         _animator.SetBool(_animIDJump, true);
+                        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Jump")) _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     }
 
-                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Jump")) _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+                    
 
                     // update animator if using character
                 }
