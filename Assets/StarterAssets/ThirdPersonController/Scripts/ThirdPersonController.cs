@@ -124,6 +124,8 @@ namespace StarterAssets
 
         private Vector2 screenCenter;
 
+        public ParticleSystem[] impactEffects;
+
         [SerializeField] LayerMask aimColliderMask = new LayerMask();
 
         private bool IsCurrentDeviceMouse
@@ -380,6 +382,10 @@ namespace StarterAssets
                 if(canFire){
                     canFire = false;
                     if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                        ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
+                        effect.transform.forward = -transform.forward;
+                        Destroy(effect, effect.main.duration);
+
                         if (hit.transform.name == "Robot_Animated_basic"){
                             EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                             if (enemy != null){
