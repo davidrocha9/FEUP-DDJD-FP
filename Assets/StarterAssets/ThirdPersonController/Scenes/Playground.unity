@@ -3137,6 +3137,12 @@ MonoBehaviour:
   CameraAngleOverride: 0
   LockCameraPosition: 0
   aimCamera: {fileID: 1501105217}
+  impactEffects:
+  - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
     m_Bits: 1
