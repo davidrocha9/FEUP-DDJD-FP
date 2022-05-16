@@ -12,6 +12,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 
+		public bool interact;
+
 		public bool aim;
 
 		public bool fire;
@@ -42,6 +44,11 @@ namespace StarterAssets
 			JumpInput(value.isPressed);
 		}
 
+		public void OnInteract(InputValue value)
+		{
+			InteractInput(value.isPressed);
+		}
+
 		public void OnAim(InputValue value)
 		{
 			AimInput(value.isPressed);
@@ -68,6 +75,11 @@ namespace StarterAssets
 		public void JumpInput(bool newJumpState)
 		{
 			jump = newJumpState;
+		}
+
+		public void InteractInput(bool newInteractState)
+		{
+			interact = newInteractState;
 		}
 
 		public void AimInput(bool newAimState)

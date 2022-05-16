@@ -117,10 +117,15 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        public bool interact = false;
+
         private bool rotateWhenMoving = true;
 
         private bool canFire = true;
         private float fireTimer = 0f;
+
+        private Trigger trigger;
+        private ArenaTrigger arenaTrigger;
 
         private Vector2 screenCenter;
 
@@ -182,6 +187,7 @@ namespace StarterAssets
             Move();
             Aim();
             Fire();
+            Interact();
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
@@ -320,6 +326,17 @@ namespace StarterAssets
                 
                 //_animator.SetFloat(_animIDSpeed, _animationBlend);
                 //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            }
+        }
+
+        private void Interact()
+        {
+            if (_input.interact && !interact){
+                interact = true;
+                checkTrigger();
+            } else {
+                interact = false;
+                _input.interact = false;
             }
         }
 
@@ -523,5 +540,24 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+
+        private void checkTrigger()
+        {
+            if (trigger!= null){
+                Debug.Log("Action");
+                trigger.performAction();
+            }
+            if (arenaTrigger!= null){
+                Debug.Log("Action");
+                arenaTrigger.performAction();
+            }
+        }
+
+        public void OnTriggerStay(Collider other)
+        {
+            trigger = other.GetComponent<Trigger>();
+            arenaTrigger = other.GetComponent<ArenaTrigger>();
+        }
+
     }
 }
