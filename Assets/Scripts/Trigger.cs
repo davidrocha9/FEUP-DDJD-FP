@@ -7,9 +7,12 @@ public class Trigger : MonoBehaviour
 
     private bool triggerActive;
 
+    public SceneSwitch sceneSwitch;
+
     public void performAction()
     {
-        TeleportToArena();
+        //TeleportToArena();
+        sceneSwitch.LoadArenaScene();
     }
 
     public void TeleportToArena()
