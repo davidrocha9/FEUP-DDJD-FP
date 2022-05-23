@@ -12,8 +12,8 @@ public class HordeSpawner : MonoBehaviour
 
     float startTime;
 
-    Vector2 xLimits = new Vector2(-95, 95);
-    Vector2 zLimits = new Vector2(-95, 95);
+    Vector2 xLimits = new Vector2(-30, 30);
+    Vector2 zLimits = new Vector2(-30, 30);
 
     public bool active;
 
@@ -44,7 +44,7 @@ public class HordeSpawner : MonoBehaviour
         {
             float x = Random.Range(xLimits[0], xLimits[1]);
             float z = Random.Range(zLimits[0], zLimits[1]);
-            Vector3 position = new Vector3(x, 1, z);
+            Vector3 position = new Vector3(x, 3, z);
             GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
             enemy.transform.SetParent(enemiesHolder.transform);
         }

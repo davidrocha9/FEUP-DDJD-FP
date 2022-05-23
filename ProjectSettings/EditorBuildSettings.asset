@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/StarterAssets/ThirdPersonController/Scenes/Hub.unity
+    guid: e9017d5f96b9f09489b4b37e1d6eb914
+  - enabled: 1
+    path: Assets/StarterAssets/ThirdPersonController/Scenes/Arena.unity
+    guid: 3da1974cc6636bc4caa4981ae93fe0ba
   m_configObjects: {}
