@@ -13,6 +13,9 @@ public class GunBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject camera;
 
+    [SerializeField]
+    private ParticleSystem muzzleFlash;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,18 +25,16 @@ public class GunBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(camera.transform.position, -camera.transform.forward, Color.green);
+
     }
 
 
     public void Shoot()
     {
-        Debug.Log("Shooting");
-        RaycastHit hit;
-        if(Physics.Raycast(camera.transform.position, -camera.transform.forward, out hit))
-        {
-            Debug.Log(hit.transform.name);
-        }
+        ParticleSystem obj = Instantiate(muzzleFlash, this.transform.position, new Quaternion(0, 0, 0, 0)) as ParticleSystem;
+        obj.transform.parent = this.transform;
+        obj.transform.localPosition = new Vector3(14.69f, 0, 0);
+        Destroy(obj.gameObject, obj.main.duration);
     }
 
 }

@@ -38,15 +38,25 @@ public class HordeSpawner : MonoBehaviour
         }
     }
 
+    bool checkIfInBounds(float x, float y, float centerX, float centerY, float radius){
+
+        return Mathf.Pow((x-centerX), 2) + Mathf.Pow((y-centerY), 2) < Mathf.Pow(radius, 2);
+
+    }
+
     void SpawnHorde(int numEnemies)
     {
-        for (int i = 0; i < 5; i++)
+        int num_spawned = 0;
+        while (num_spawned < numEnemies)
         {
             float x = Random.Range(xLimits[0], xLimits[1]);
             float z = Random.Range(zLimits[0], zLimits[1]);
-            Vector3 position = new Vector3(x, 3, z);
-            GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
-            enemy.transform.SetParent(enemiesHolder.transform);
+            if (checkIfInBounds(x, z, 0, 0, 37)){
+                Vector3 position = new Vector3(x, 3, z);
+                GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
+                enemy.transform.SetParent(enemiesHolder.transform);
+                num_spawned++;
+            }
         }
     }
 }

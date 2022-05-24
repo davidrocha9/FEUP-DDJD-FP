@@ -131,7 +131,11 @@ namespace StarterAssets
 
         public ParticleSystem[] impactEffects;
 
-        [SerializeField] LayerMask aimColliderMask = new LayerMask();
+        [SerializeField]
+        private LayerMask aimColliderMask = new LayerMask();
+
+        [SerializeField]
+        private GunBehaviour gun;
 
         private bool IsCurrentDeviceMouse
         {
@@ -360,7 +364,6 @@ namespace StarterAssets
 
                 mouseGlobalPosition.y = transform.position.y;
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
-
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
                 
                 _animator.SetBool("Aiming", true);
@@ -397,11 +400,12 @@ namespace StarterAssets
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
                 _animator.SetBool(_animIDShoot, true);
                 if(canFire){
+                    gun.Shoot();
                     canFire = false;
                     if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
                         ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
                         effect.transform.forward = -transform.forward;
-                        Destroy(effect, effect.main.duration);
+                        Destroy(effect.gameObject, effect.main.duration);
 
                         if (hit.transform.name == "Robot_Animated_basic"){
                             EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
