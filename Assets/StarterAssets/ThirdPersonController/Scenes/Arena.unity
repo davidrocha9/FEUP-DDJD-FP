@@ -1490,6 +1490,7 @@ GameObject:
   - component: {fileID: 848660614}
   - component: {fileID: 848660616}
   - component: {fileID: 848660615}
+  - component: {fileID: 848660617}
   m_Layer: 0
   m_Name: Cube.001
   m_TagString: Untagged
@@ -1560,6 +1561,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848660613}
   m_Mesh: {fileID: 4493585093827132993, guid: ee634a1988a2d6c4daac3afe779d8d6e, type: 3}
+--- !u!114 &848660617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848660613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5f91b28ff35104fa5e134877e8f3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  range: 100
+  camera: {fileID: 0}
+  muzzleFlash: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
 --- !u!1 &865495146
 GameObject:
   m_ObjectHideFlags: 0
@@ -4017,6 +4034,7 @@ MonoBehaviour:
   aimColliderMask:
     serializedVersion: 2
     m_Bits: 1
+  gun: {fileID: 848660617}
 --- !u!143 &1996843643
 CharacterController:
   m_ObjectHideFlags: 0
