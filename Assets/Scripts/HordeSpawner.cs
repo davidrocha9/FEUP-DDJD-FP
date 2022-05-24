@@ -29,7 +29,7 @@ public class HordeSpawner : MonoBehaviour
     {
         
     }
-
+    
     void FixedUpdate()
     {
         if ( (Time.time - startTime) >= 5 && active){

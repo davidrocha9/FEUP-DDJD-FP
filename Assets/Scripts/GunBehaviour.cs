@@ -16,19 +16,6 @@ public class GunBehaviour : MonoBehaviour
     [SerializeField]
     private ParticleSystem muzzleFlash;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     public void Shoot()
     {
         ParticleSystem obj = Instantiate(muzzleFlash, this.transform.position, new Quaternion(0, 0, 0, 0)) as ParticleSystem;
