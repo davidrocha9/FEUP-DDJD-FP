@@ -14,6 +14,8 @@ namespace StarterAssets
 
 		public bool interact;
 
+		public bool startRound;
+
 		public bool aim;
 
 		public bool fire;
@@ -49,6 +51,11 @@ namespace StarterAssets
 			InteractInput(value.isPressed);
 		}
 
+		public void OnStartRound(InputValue value)
+		{
+			StartRoundInput(value.isPressed);
+		}
+
 		public void OnAim(InputValue value)
 		{
 			AimInput(value.isPressed);
@@ -80,6 +87,11 @@ namespace StarterAssets
 		public void InteractInput(bool newInteractState)
 		{
 			interact = newInteractState;
+		}
+
+		public void StartRoundInput(bool newStartRoundState)
+		{
+			startRound = newStartRoundState;
 		}
 
 		public void AimInput(bool newAimState)

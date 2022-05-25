@@ -1751,7 +1751,7 @@ GameObject:
   - component: {fileID: 944417695}
   - component: {fileID: 944417694}
   m_Layer: 0
-  m_Name: HordeSpawner
+  m_Name: WaveSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1766,12 +1766,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 944417693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73603be0cf3212249a370b848cd01ff3, type: 3}
+  m_Script: {fileID: 11500000, guid: c7642676462a9de41be9b5a166ee141b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 3743126699257868648, guid: 3d0769ee527dfca46a54cc3fc2a7013d, type: 3}
   enemiesHolder: {fileID: 386822086}
-  active: 1
 --- !u!4 &944417695
 Transform:
   m_ObjectHideFlags: 0
@@ -3944,6 +3943,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   interact: 0
+  startRound: 0
   aim: 0
   fire: 0
   analogMovement: 0
@@ -4013,6 +4013,7 @@ MonoBehaviour:
   LockCameraPosition: 0
   aimCamera: {fileID: 1876309382}
   interact: 0
+  waveSpawner: {fileID: 944417694}
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   - {fileID: 0}

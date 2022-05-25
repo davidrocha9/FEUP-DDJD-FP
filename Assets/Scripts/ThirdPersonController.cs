@@ -119,6 +119,10 @@ namespace StarterAssets
 
         public bool interact = false;
 
+        private bool startRound = false;
+
+        private int nextRound = 1;
+
         private bool rotateWhenMoving = true;
 
         private bool canFire = true;
@@ -126,6 +130,9 @@ namespace StarterAssets
 
         private Trigger trigger;
         private ArenaTrigger arenaTrigger;
+
+        [SerializeField]
+        private WaveSpawner waveSpawner;
 
         private Vector2 screenCenter;
 
@@ -192,6 +199,7 @@ namespace StarterAssets
             Aim();
             Fire();
             Interact();
+            StartRound();
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
@@ -341,6 +349,18 @@ namespace StarterAssets
             } else {
                 interact = false;
                 _input.interact = false;
+            }
+        }
+
+        private void StartRound()
+        {
+            if (_input.startRound && !startRound){
+                startRound = true;
+                waveSpawner.StartRound(nextRound);
+                nextRound++;
+            } else {
+                startRound = false;
+                _input.startRound = false;
             }
         }
 

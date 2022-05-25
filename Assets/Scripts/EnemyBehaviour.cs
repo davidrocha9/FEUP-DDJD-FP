@@ -7,17 +7,17 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Animator animator;
 
-    int moveSpeed = 3;
+    int moveSpeed = 1;
     //float offset;
     Vector3 offset;
 
-    public int health = 100;
+    public int health = 20;
 
     // Start is called before the first frame update
     void Start()
     {
         playerTransform = GameObject.Find("PlayerArmature").transform;
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -41,8 +41,10 @@ public class EnemyBehaviour : MonoBehaviour
             animator.SetBool("is_attacking", true);
         }
 
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Finished")){
-            Destroy(this.gameObject);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
+            moveSpeed = 0;
+            float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
+            Destroy(gameObject, animTime - 0.5f);
         }
 
     }
