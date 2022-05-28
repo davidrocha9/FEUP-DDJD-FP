@@ -4,7 +4,7 @@ using UnityEngine;
 public class TrainingTargetBehaviour : MonoBehaviour
 {
 
-    float maxY = 30.0f;
+    float maxY = 29.8f;
     float startingY;
 
     bool moveUp = true;
