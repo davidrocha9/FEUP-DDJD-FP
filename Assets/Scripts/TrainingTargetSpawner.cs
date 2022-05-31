@@ -12,9 +12,9 @@ public class TrainingTargetSpawner : MonoBehaviour
 
     float startTime;
 
-    Vector2 xLimits = new Vector2(2.5f, 13f);
-    Vector2 zLimits = new Vector2(-3f, 3f);
-    float spawningY = 28.5f;
+    Vector2 xLimits = new Vector2(18.0f, 43.0f);
+    Vector2 zLimits = new Vector2(-6f, 8f);
+    float spawningY = 28.0f;
 
     public bool active;
 
@@ -50,8 +50,14 @@ public class TrainingTargetSpawner : MonoBehaviour
 
     void SpawnTarget()
     {
-        float x = Random.Range(xLimits[0], xLimits[1]);
-        float z = Random.Range(zLimits[0], zLimits[1]);
+        float x;
+        float z;
+        Vector3 ignoreYpos;
+        do{
+            x = Random.Range(xLimits[0], xLimits[1]);
+            z = Random.Range(zLimits[0], zLimits[1]);
+            ignoreYpos = new Vector3(x,33,z);
+        } while(Physics.CheckSphere(ignoreYpos, 2));
         Vector3 position = new Vector3(x, spawningY, z);
         GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
         enemy.transform.SetParent(enemiesHolder.transform);

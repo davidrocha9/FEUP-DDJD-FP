@@ -443,7 +443,7 @@ namespace StarterAssets
                 }
             }
             else{
-                rotateWhenMoving = true;
+                if(!_animator.GetBool("Aiming")) rotateWhenMoving = true;
                 _animator.SetBool(_animIDShoot, false);
             }
         }
