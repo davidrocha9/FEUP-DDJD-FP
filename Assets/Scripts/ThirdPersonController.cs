@@ -119,6 +119,8 @@ namespace StarterAssets
 
         public bool interact = false;
 
+        public bool reload = false;
+
         private bool startRound = false;
 
         private int nextRound = 1;
@@ -136,8 +138,6 @@ namespace StarterAssets
         private WaveSpawner waveSpawner;
 
         private Vector2 screenCenter;
-
-        public ParticleSystem[] impactEffects;
 
         [SerializeField]
         private LayerMask aimColliderMask = new LayerMask();
@@ -201,6 +201,7 @@ namespace StarterAssets
             Fire();
             Interact();
             StartRound();
+            Reload();
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
@@ -353,6 +354,17 @@ namespace StarterAssets
             }
         }
 
+        private void Reload()
+        {
+            if (_input.reload && !reload){
+                reload = true;
+                gun.Reload();
+            } else {
+                reload = false;
+                _input.reload = false;
+            }
+        }
+
         private void StartRound()
         {
             if (_input.startRound && !startRound){
@@ -425,26 +437,8 @@ namespace StarterAssets
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
                 _animator.SetBool(_animIDShoot, true);
                 if(canFire){
-                    gun.Shoot();
+                    gun.Shoot(shootingSpreadVec);
                     canFire = false;
-                    if (Physics.Raycast(ray, out hit, gun.range, aimColliderMask)){
-                        ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
-                        effect.transform.forward = -transform.forward;
-                        Destroy(effect.gameObject, effect.main.duration);
-
-                        if (hit.transform.name == "Robot_Animated_basic"){
-                            EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
-                            if (enemy != null){
-                                enemy.TakeDamage(gun.damage);
-                            }
-                        }
-                        if(hit.transform.name == "target_test"){
-                            TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
-                            if (target != null){
-                                target.TakeDamage(gun.damage);
-                            }
-                        }
-                    }
                 }
             }
             else{

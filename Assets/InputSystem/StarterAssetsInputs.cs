@@ -12,6 +12,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 
+		public bool reload;
+
 		public bool interact;
 
 		public bool startRound;
@@ -45,6 +47,12 @@ namespace StarterAssets
 		{
 			JumpInput(value.isPressed);
 		}
+
+		public void OnReload(InputValue value)
+		{
+			ReloadInput(value.isPressed);
+		}
+
 
 		public void OnInteract(InputValue value)
 		{
@@ -82,6 +90,11 @@ namespace StarterAssets
 		public void JumpInput(bool newJumpState)
 		{
 			jump = newJumpState;
+		}
+
+		public void ReloadInput(bool newReloadState)
+		{
+			reload = newReloadState;
 		}
 
 		public void InteractInput(bool newInteractState)
