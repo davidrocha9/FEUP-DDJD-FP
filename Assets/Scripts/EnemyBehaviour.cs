@@ -7,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Animator animator;
 
+
     //private WaveSpawner waveSpawner;
 
     int moveSpeed = 1;
@@ -15,11 +16,19 @@ public class EnemyBehaviour : MonoBehaviour
 
     public float health = 20;
 
+    bool dropped = false;
+    
+    [SerializeField]
+    private GameObject currencyPrefab;
+
+    private GameObject currencyHolder;
+
     // Start is called before the first frame update
     void Start()
     {
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
+        currencyHolder = GameObject.Find("CurrencyHolder");
         //waveSpawner = GameObject.Find("WaveSpawner").GetComponent<WaveSpawner>();
     }
 
@@ -47,16 +56,20 @@ public class EnemyBehaviour : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
             moveSpeed = 0;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
+                DropCurrency();
+            }
             Destroy(gameObject, animTime - 0.5f);
         }
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-
-        if (health <= 0){
-            Die();
+        if(!animator.GetBool("is_dead")){
+            health -= damage;
+            if (health <= 0){
+                Die();
+            }
         }
     }
 
@@ -65,6 +78,19 @@ public class EnemyBehaviour : MonoBehaviour
         //waveSpawner.UpdateNumEnemiesAlive();
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
+    }
+
+    private void DropCurrency(){
+        if(!dropped){
+            dropped = true;
+            int dropRng = Random.Range(1, 2);
+            if(dropRng == 1){
+                Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
+                Debug.Log("Dropped currency");
+                currency.transform.SetParent(currencyHolder.transform);
+            }
+        }
     }
 
 }

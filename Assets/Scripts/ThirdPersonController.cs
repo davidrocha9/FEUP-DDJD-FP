@@ -89,6 +89,8 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private int currencyCounter = 0;
+        
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -588,5 +590,17 @@ namespace StarterAssets
             arenaTrigger = other.GetComponent<ArenaTrigger>();
         }
 
+        void OnControllerColliderHit(ControllerColliderHit hit){
+            if(hit.gameObject.tag == "Currency"){
+                CurrencyBehaviour currency = hit.transform.GetComponent<CurrencyBehaviour>();
+                increaseCurrency();
+                currency.DeSpawn();
+            }
+        }
+
+        void increaseCurrency(){
+            currencyCounter++;
+            Debug.Log("Currrent Currency: " + currencyCounter);
+        }
     }
 }
