@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "bee08c8f-6aca-4a19-bfa4-c95721221df1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "StartRound",
                     "type": "Button",
                     "id": "2d8f417d-155c-4a65-b8e1-03947d6053bb",
@@ -282,7 +291,7 @@
                 {
                     "name": "",
                     "id": "4fe7da03-2ae8-4c37-9449-adb391e47d3a",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -293,7 +302,7 @@
                 {
                     "name": "",
                     "id": "6990cce0-0fd6-441f-9122-763a9a9636ce",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -304,11 +313,33 @@
                 {
                     "name": "",
                     "id": "f880c246-a5fa-40c4-91ca-9f79c9e2955c",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "StartRound",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecb0a283-a3d1-4c89-aadc-c98f61bb0311",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad73aac5-0fce-4b3a-a411-4581f8688648",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
