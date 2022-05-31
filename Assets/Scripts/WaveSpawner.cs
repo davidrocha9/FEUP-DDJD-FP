@@ -19,7 +19,13 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField]
     private GameObject startRoundTextUI;
 
+    [SerializeField]
+    private GameObject numEnemiesAliveUI;
+
+    private Text numEnemiesAliveText;
+
     private bool round_active = false;
+    private bool last_round = false;
 
     private int numWaves = 0;
     private float waveTimeout = 60f;
@@ -32,7 +38,8 @@ public class WaveSpawner : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
-        startTimeRound = Time.time;
+        startTimeRound = 0;
+        numEnemiesAliveText = numEnemiesAliveUI.GetComponent<Text>();
     }
 
     void Update()
@@ -45,20 +52,35 @@ public class WaveSpawner : MonoBehaviour
         }
 
         if (numWaves <= 0){
-            round_active = false;
+            last_round = true;
+            //round_active = false;
         }
     }
 
     void FixedUpdate()
     {
         if (round_active){
-            if ( (Time.time - startTime) >= waveTimeout || enemiesHolder.transform.childCount <= 0){
-                startTime = Time.time;
-                numWaves--;
-                ShowWaveStartUI(numWaves);
-                SpawnHorde(waveSize);
+            if (!last_round){
+                if ((Time.time - startTime) >= waveTimeout || enemiesHolder.transform.childCount <= 0){
+                    startTime = Time.time;
+                    numWaves--;
+                    Debug.Log("New Wave Now");
+                    ShowWaveStartUI(numWaves);
+                    SpawnHorde(waveSize);
+                }
+            } else {
+                if (enemiesHolder.transform.childCount <= 0){
+                    round_active = false;
+                }
             }
+
+            UpdateNumEnemiesAlive();
         }
+    }
+
+    public void UpdateNumEnemiesAlive()
+    {
+        numEnemiesAliveText.text = enemiesHolder.transform.childCount.ToString();
     }
 
     bool checkIfInBounds(float x, float y, float centerX, float centerY, float radius){
@@ -70,9 +92,12 @@ public class WaveSpawner : MonoBehaviour
     public int StartRound(int roundNumber)
     {
         if (round_active) return roundNumber;
+        last_round = false;
         ShowRoundStartUI(roundNumber);
         round_active = true;
-        numWaves = roundNumber;
+        numWaves = roundNumber-1;
+        SpawnHorde(waveSize);
+        ShowWaveStartUI(numWaves);
         return roundNumber + 1;
     }
 
@@ -90,6 +115,7 @@ public class WaveSpawner : MonoBehaviour
                 num_spawned++;
             }
         }
+        UpdateNumEnemiesAlive();
     }
 
 
@@ -100,7 +126,7 @@ public class WaveSpawner : MonoBehaviour
 
     void ShowRoundStartUI(int round_num)
     {
-        startTimeRound = Time.time;
+        startTimeRound = 0;
         startRoundText = true;
         startRoundTextUI.GetComponent<Text>().text = "Round " + round_num.ToString();
         startRoundTextUI.SetActive(true);

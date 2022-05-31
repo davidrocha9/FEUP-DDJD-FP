@@ -7,17 +7,20 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Animator animator;
 
+    //private WaveSpawner waveSpawner;
+
     int moveSpeed = 1;
     //float offset;
     Vector3 offset;
 
-    public int health = 20;
+    public float health = 20;
 
     // Start is called before the first frame update
     void Start()
     {
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
+        //waveSpawner = GameObject.Find("WaveSpawner").GetComponent<WaveSpawner>();
     }
 
     // Update is called once per frame
@@ -46,10 +49,9 @@ public class EnemyBehaviour : MonoBehaviour
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             Destroy(gameObject, animTime - 0.5f);
         }
-
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
 
@@ -60,6 +62,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Die()
     {
+        //waveSpawner.UpdateNumEnemiesAlive();
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
     }

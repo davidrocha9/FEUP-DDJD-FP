@@ -409,7 +409,7 @@ namespace StarterAssets
 
                 Vector2 shootingSpreadVec = new Vector2(0, 0);
                 if (!_input.aim){
-                    shootingSpreadVec = new Vector2(Random.Range(-shootingSpread, shootingSpread), Random.Range(-shootingSpread, shootingSpread));
+                    shootingSpreadVec = new Vector2(Random.Range(-gun.shootingSpread, gun.shootingSpread), Random.Range(-gun.shootingSpread, gun.shootingSpread));
                 }
 
                 // Rotate the player to face where he is aiming
@@ -427,7 +427,7 @@ namespace StarterAssets
                 if(canFire){
                     gun.Shoot();
                     canFire = false;
-                    if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                    if (Physics.Raycast(ray, out hit, gun.range, aimColliderMask)){
                         ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
                         effect.transform.forward = -transform.forward;
                         Destroy(effect.gameObject, effect.main.duration);
@@ -435,13 +435,13 @@ namespace StarterAssets
                         if (hit.transform.name == "Robot_Animated_basic"){
                             EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                             if (enemy != null){
-                                enemy.TakeDamage(20);
+                                enemy.TakeDamage(gun.damage);
                             }
                         }
                         if(hit.transform.name == "target_test"){
                             TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
                             if (target != null){
-                                target.TakeDamage(20);
+                                target.TakeDamage(gun.damage);
                             }
                         }
                     }
