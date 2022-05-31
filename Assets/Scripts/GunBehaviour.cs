@@ -18,10 +18,11 @@ public class GunBehaviour : MonoBehaviour
 
     public void Shoot()
     {
-        ParticleSystem obj = Instantiate(muzzleFlash, this.transform.position, new Quaternion(0, 0, 0, 0)) as ParticleSystem;
-        obj.transform.parent = this.transform;
-        obj.transform.localPosition = new Vector3(14.69f, 0, 0);
-        Destroy(obj.gameObject, obj.main.duration);
+        muzzleFlash.Play();
+        //ParticleSystem obj = Instantiate(muzzleFlash, this.transform.position, new Quaternion(0, 0, 0, 0)) as ParticleSystem;
+        //obj.transform.parent = this.transform;
+        //obj.transform.localPosition = new Vector3(14.69f, 0, 0);
+        //Destroy(obj.gameObject, obj.main.duration);
     }
 
 }

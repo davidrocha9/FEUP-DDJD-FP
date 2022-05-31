@@ -127,6 +127,7 @@ namespace StarterAssets
 
         private bool canFire = true;
         private float fireTimer = 0f;
+        private float shootingSpread = 15f;
 
         private Trigger trigger;
         private ArenaTrigger arenaTrigger;
@@ -356,8 +357,7 @@ namespace StarterAssets
         {
             if (_input.startRound && !startRound){
                 startRound = true;
-                waveSpawner.StartRound(nextRound);
-                nextRound++;
+                nextRound = waveSpawner.StartRound(nextRound);
             } else {
                 startRound = false;
                 _input.startRound = false;
@@ -407,8 +407,13 @@ namespace StarterAssets
 
                 Vector3 mouseGlobalPosition = Vector3.zero;
 
+                Vector2 shootingSpreadVec = new Vector2(0, 0);
+                if (!_input.aim){
+                    shootingSpreadVec = new Vector2(Random.Range(-shootingSpread, shootingSpread), Random.Range(-shootingSpread, shootingSpread));
+                }
+
                 // Rotate the player to face where he is aiming
-                Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+                Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
                     mouseGlobalPosition = hit.point;

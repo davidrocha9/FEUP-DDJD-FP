@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class WaveSpawner : MonoBehaviour
     private GameObject enemiesHolder;
 
     private float startTime;
+    private float startTimeRound;
+    private bool startRoundText;
+    private float startRoundTextTime = 2f;
+
+    [SerializeField]
+    private GameObject startRoundTextUI;
 
     private bool round_active = false;
 
@@ -25,10 +32,18 @@ public class WaveSpawner : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
+        startTimeRound = Time.time;
     }
 
     void Update()
     {
+        if (startRoundText){
+            startTimeRound += Time.deltaTime;
+            if (startTimeRound >= startRoundTextTime){
+                startRoundTextUI.SetActive(false);
+            }
+        }
+
         if (numWaves <= 0){
             round_active = false;
         }
@@ -52,13 +67,13 @@ public class WaveSpawner : MonoBehaviour
 
     }
 
-    public void StartRound(int roundNumber)
+    public int StartRound(int roundNumber)
     {
-        if (round_active) return;
+        if (round_active) return roundNumber;
         ShowRoundStartUI(roundNumber);
         round_active = true;
         numWaves = roundNumber;
-
+        return roundNumber + 1;
     }
 
     void SpawnHorde(int numEnemies)
@@ -85,6 +100,10 @@ public class WaveSpawner : MonoBehaviour
 
     void ShowRoundStartUI(int round_num)
     {
+        startTimeRound = Time.time;
+        startRoundText = true;
+        startRoundTextUI.GetComponent<Text>().text = "Round " + round_num.ToString();
+        startRoundTextUI.SetActive(true);
         Debug.Log("Round " + round_num.ToString());
     }
 
