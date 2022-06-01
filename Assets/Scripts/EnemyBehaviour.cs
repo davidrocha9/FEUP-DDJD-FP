@@ -18,7 +18,6 @@ public class EnemyBehaviour : MonoBehaviour
     public int dropPercentage;
 
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
-    float timeSinceAttack = 0.0f;
     
     [SerializeField]
     private GameObject currencyPrefab;
@@ -47,19 +46,25 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
         
-        if (alreadyAttacked)
+        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Atack"))
         {
-            timeSinceAttack += Time.deltaTime;
-            if (timeSinceAttack > 2.0f)
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.1f )
             {
-                timeSinceAttack = 0.0f;
+                registeredHit = false;
+            }
+            
+            //Debug.Log("entrei aqui");
+            //Debug.Log( Mathf.Round(animator.GetCurrentAnimatorStateInfo(0).normalizedTime * 10) / 10);
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
                 alreadyAttacked = false;
                 registeredHit = false;
             }
-            else if (timeSinceAttack > 1.0f && !registeredHit)
+            else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f && !registeredHit)
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
+                    Debug.Log("hit");
                     playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(10);
                 }
                 registeredHit = true;
@@ -79,7 +84,6 @@ public class EnemyBehaviour : MonoBehaviour
             animator.SetBool("is_running", true);
             
         } else {
-            alreadyAttacked = true;
             animator.SetBool("is_running", false);
             animator.SetBool("is_attacking", true);
         }

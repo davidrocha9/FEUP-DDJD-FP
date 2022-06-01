@@ -29,7 +29,7 @@ public class WaveSpawner : MonoBehaviour
 
     private int numWaves = 0;
     private float waveTimeout = 60f;
-    private int waveSize = 5;
+    private int waveSize = 1;
 
     Vector2 xLimits = new Vector2(-30, 30);
     Vector2 zLimits = new Vector2(-30, 30);

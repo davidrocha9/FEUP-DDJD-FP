@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using Cinemachine;
+using System.Collections;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -150,6 +152,11 @@ namespace StarterAssets
         [SerializeField]
         private GunBehaviour gun;
 
+        [SerializeField]
+        private GameObject bloodOverlay;
+
+        private bool playerGotHit = false;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -214,6 +221,22 @@ namespace StarterAssets
                     
                     canFire = true;
                     fireTimer = 0;
+                }
+            }
+
+            if (playerGotHit)
+            {
+                Color temp = bloodOverlay.GetComponent<Image>().color;
+                temp.a -= 0.01f;
+                bloodOverlay.GetComponent<Image>().color = temp;
+                
+                Debug.Log(temp.a);
+                if (temp.a < 0)
+                {
+                    playerGotHit = false;
+                    temp.a = 1.0f;
+                    bloodOverlay.GetComponent<Image>().color = temp;
+                    bloodOverlay.SetActive(false);
                 }
             }
         }
@@ -601,6 +624,12 @@ namespace StarterAssets
         {
             Debug.Log("Player was hit");
             Health -= damage;
+            
+            bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1 + Health / 100.0f, 1 + Health / 100.0f, 1);
+
+            bloodOverlay.SetActive(true);
+            playerGotHit = true;
+
             if (Health < 0)
             {
                 Die();
