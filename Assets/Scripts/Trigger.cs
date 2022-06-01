@@ -9,9 +9,11 @@ public class Trigger : MonoBehaviour
 
     public SceneSwitch sceneSwitch;
 
+    public string ArenaName;
+
     public void performAction()
     {
-        //TeleportToArena();
+        sceneSwitch.setArenaName(ArenaName);
         sceneSwitch.LoadArenaScene();
     }
 

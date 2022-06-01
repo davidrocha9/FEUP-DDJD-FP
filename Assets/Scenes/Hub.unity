@@ -533,20 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4416926083347132232}
   sceneSwitch: {fileID: 923621702}
---- !u!64 &321134715
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 321134711}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  ArenaName: Forest
 --- !u!64 &322420034
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -685,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5f91b28ff35104fa5e134877e8f3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 30
   range: 100
   shootingSpread: 15
   numBulletsPerMagazine: 30
@@ -937,6 +924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4416926083347132232}
   sceneSwitch: {fileID: 923621702}
+  ArenaName: Factory
 --- !u!1 &591243273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,6 +1619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingUI: {fileID: 842194893}
   loadingBarFill: {fileID: 698599058}
+  ArenaName: Colliseum
 --- !u!4 &923621703
 Transform:
   m_ObjectHideFlags: 0
@@ -1753,6 +1742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4416926083347132232}
   sceneSwitch: {fileID: 923621702}
+  ArenaName: Colliseum
 --- !u!4 &1002057127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2412161367050800168, guid: ee634a1988a2d6c4daac3afe779d8d6e, type: 3}
@@ -1929,6 +1919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4416926083347132232}
   sceneSwitch: {fileID: 923621702}
+  ArenaName: 
 --- !u!1001 &1221041499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1954,11 +1945,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.6660001
+      value: -9.384
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.235
+      value: 32.114998
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3978,6 +3969,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  currencyCounter: 0
   aimCamera: {fileID: 1501105217}
   interact: 0
   reload: 0

@@ -89,7 +89,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
-        private int currencyCounter = 0;
+        public int currencyCounter = 0;
         
 
         // timeout deltatime
@@ -371,6 +371,7 @@ namespace StarterAssets
         {
             if (_input.startRound && !startRound){
                 startRound = true;
+                gun.FillAmmo();
                 nextRound = waveSpawner.StartRound(nextRound);
             } else {
                 startRound = false;
@@ -475,7 +476,6 @@ namespace StarterAssets
                     
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     
-                    
                     if (_hasAnimator)
                     {
                         if(_animator.GetBool("Aiming")) _input.jump = false;
@@ -568,20 +568,30 @@ namespace StarterAssets
 
         private void checkTrigger()
         {
-            if (trigger!= null){
-                Debug.Log("Action");
-                trigger.performAction();
-            }
             if (arenaTrigger!= null){
-                Debug.Log("Action");
-                arenaTrigger.performAction();
+                if((nextRound-1) % 5 == 0 && !startRound){
+                    Debug.Log("You're okay to extract");
+                    arenaTrigger.performAction();
+                }
+                else{
+                    Debug.Log("You can only extract every 5 rounds");
+                }
+            }
+            if (trigger!= null){
+                Debug.Log("Entering Arena");
+                trigger.performAction();
             }
         }
 
-        public void OnTriggerStay(Collider other)
+        void OnTriggerEnter(Collider other)
         {
             trigger = other.GetComponent<Trigger>();
             arenaTrigger = other.GetComponent<ArenaTrigger>();
+        }
+
+        void OnTriggerExit(Collider other){
+            trigger = null;
+            arenaTrigger = null;
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit){

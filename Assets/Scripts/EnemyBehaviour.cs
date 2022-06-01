@@ -14,7 +14,8 @@ public class EnemyBehaviour : MonoBehaviour
     //float offset;
     Vector3 offset;
 
-    public float health = 20;
+    public float health;
+    public int dropPercentage;
 
     bool dropped = false;
     
@@ -83,8 +84,8 @@ public class EnemyBehaviour : MonoBehaviour
     private void DropCurrency(){
         if(!dropped){
             dropped = true;
-            int dropRng = Random.Range(1, 2);
-            if(dropRng == 1){
+            int dropRng = Random.Range(1, 101);
+            if(dropRng <= dropPercentage){
                 Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
                 Debug.Log("Dropped currency");

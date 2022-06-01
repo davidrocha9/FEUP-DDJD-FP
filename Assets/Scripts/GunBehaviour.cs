@@ -4,15 +4,15 @@ using UnityEngine;
 public class GunBehaviour : MonoBehaviour
 {
 
-    public float damage = 20f;
+    public float damage;
 
-    public float range = 100f;
+    public float range;
 
-    public float shootingSpread = 15f;
+    public float shootingSpread;
 
-    public int numBulletsPerMagazine = 30;
+    public int numBulletsPerMagazine;
 
-    public int defaultNumberOfExtraMagazines = 3;
+    public int defaultNumberOfExtraMagazines;
 
     public int currentAmmo;
 
@@ -38,8 +38,7 @@ public class GunBehaviour : MonoBehaviour
 
     void Start()
     {
-        currentAmmo = numBulletsPerMagazine;
-        availableAmmo = numBulletsPerMagazine * defaultNumberOfExtraMagazines;
+        FillAmmo();
         screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 
@@ -55,7 +54,7 @@ public class GunBehaviour : MonoBehaviour
             effect.transform.forward = -transform.forward;
             Destroy(effect.gameObject, effect.main.duration);
 
-            if (hit.transform.name == "Robot_Animated_basic"){
+            if (hit.transform.tag == "Enemy"){
                 EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                 if (enemy != null){
                     enemy.TakeDamage(damage);
@@ -87,6 +86,12 @@ public class GunBehaviour : MonoBehaviour
             availableAmmo = 0;
             currentAmmo += availableAmmo;
         }
+        updateReloadUI();
+    }
+
+    public void FillAmmo(){
+        currentAmmo = numBulletsPerMagazine;
+        availableAmmo = numBulletsPerMagazine * defaultNumberOfExtraMagazines;
         updateReloadUI();
     }
 
