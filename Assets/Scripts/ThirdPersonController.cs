@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.UI;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -141,6 +142,9 @@ namespace StarterAssets
 
         [SerializeField]
         private WaveSpawner waveSpawner;
+
+        [SerializeField]
+        private Slider healthBar;
 
         private Vector2 screenCenter;
 
@@ -601,10 +605,16 @@ namespace StarterAssets
         {
             Debug.Log("Player was hit");
             Health -= damage;
+            UpdateHealthUI();
             if (Health < 0)
             {
                 Die();
             }
+        }
+
+        private void UpdateHealthUI()
+        {
+            healthBar.value = (int) Health;
         }
 
         private void Die()
