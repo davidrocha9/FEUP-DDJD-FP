@@ -10,14 +10,15 @@ public class EnemyBehaviour : MonoBehaviour
 
     //private WaveSpawner waveSpawner;
 
-    int moveSpeed = 1;
+    public int moveSpeed;
     //float offset;
     Vector3 offset;
 
     public float health;
     public int dropPercentage;
 
-    bool dropped = false;
+    bool dropped = false, alreadyAttacked = false, registeredHit = false;
+    float timeSinceAttack = 0.0f;
     
     [SerializeField]
     private GameObject currencyPrefab;
@@ -36,8 +37,36 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
+            moveSpeed = 0;
+            float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
+                DropCurrency();
+            }
+            Destroy(transform.parent.gameObject, animTime - 0.5f);
+            return;
+        }
+        
+        if (alreadyAttacked)
+        {
+            timeSinceAttack += Time.deltaTime;
+            if (timeSinceAttack > 2.0f)
+            {
+                timeSinceAttack = 0.0f;
+                alreadyAttacked = false;
+                registeredHit = false;
+            }
+            else if (timeSinceAttack > 1.0f && !registeredHit)
+            {
+                if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
+                {
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(10);
+                }
+                registeredHit = true;
+            }
+        }
 
-        if (Vector3.Distance(transform.position, playerTransform.position) > 3){
+        if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){            
             transform.LookAt(playerTransform);
 
             Vector3 eulerAngles = transform.rotation.eulerAngles;
@@ -50,17 +79,9 @@ public class EnemyBehaviour : MonoBehaviour
             animator.SetBool("is_running", true);
             
         } else {
+            alreadyAttacked = true;
             animator.SetBool("is_running", false);
             animator.SetBool("is_attacking", true);
-        }
-
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
-            moveSpeed = 0;
-            float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
-            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
-                DropCurrency();
-            }
-            Destroy(transform.parent.gameObject, animTime - 0.5f);
         }
     }
 

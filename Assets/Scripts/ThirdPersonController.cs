@@ -22,6 +22,9 @@ namespace StarterAssets
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
 
+        [Tooltip("Character's Health")]
+        public float Health = 100.0f;
+
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -592,6 +595,21 @@ namespace StarterAssets
         void OnTriggerExit(Collider other){
             trigger = null;
             arenaTrigger = null;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            Debug.Log("Player was hit");
+            Health -= damage;
+            if (Health < 0)
+            {
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            Debug.Log("Player died");
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit){
