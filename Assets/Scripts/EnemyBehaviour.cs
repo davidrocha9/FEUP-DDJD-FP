@@ -59,7 +59,7 @@ public class EnemyBehaviour : MonoBehaviour
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
                 DropCurrency();
             }
-            Destroy(gameObject, animTime - 0.5f);
+            Destroy(transform.parent.gameObject, animTime - 0.5f);
         }
     }
 
