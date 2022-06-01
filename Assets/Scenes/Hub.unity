@@ -3938,6 +3938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 2
   SprintSpeed: 5.335
+  Health: 100
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   sensitivity: 1
