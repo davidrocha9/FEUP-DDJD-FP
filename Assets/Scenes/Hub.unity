@@ -4238,10 +4238,12 @@ MonoBehaviour:
   interact: 0
   reload: 0
   waveSpawner: {fileID: 0}
+  healthBar: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
     m_Bits: 1
   gun: {fileID: 457555807}
+  bloodOverlay: {fileID: 0}
 --- !u!143 &4416926083347132233
 CharacterController:
   m_ObjectHideFlags: 0

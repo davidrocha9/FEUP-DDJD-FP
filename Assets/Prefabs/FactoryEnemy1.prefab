@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c424affa30da8ef4cb590ab7c981639c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0
   health: 100
   dropPercentage: 20
-  currencyPrefab: {fileID: 2085789137917411795, guid: 7499c9a380875e2499caeadbf10c679c, type: 3}
+  currencyPrefab: {fileID: 3803522151357388653, guid: 8cd7200593d8c3440aec7d1d9b5ffb14, type: 3}
