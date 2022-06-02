@@ -27,6 +27,7 @@ namespace StarterAssets
 
         [Tooltip("Character's Health")]
         public float Health = 100.0f;
+        public float MaxHealth = 100.0f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -118,6 +119,8 @@ namespace StarterAssets
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
+        private HealingOverTime healingOverTime;
+
         [SerializeField]
         private CinemachineVirtualCamera aimCamera;
 
@@ -184,6 +187,7 @@ namespace StarterAssets
         {
 
             screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            healingOverTime = GetComponent<HealingOverTime>();
 
             // get a reference to our main camera
             if (_mainCamera == null)
@@ -638,6 +642,8 @@ namespace StarterAssets
         {
             Debug.Log("Player was hit");
             Health -= damage;
+
+            healingOverTime.PlayerTookDamage();
             
             UpdateHealthUI();
             bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1 + Health / 100.0f, 1 + Health / 100.0f, 1);
@@ -649,6 +655,16 @@ namespace StarterAssets
             {
                 Die();
             }
+        }
+
+        public void Heal(float amount)
+        {
+            Debug.Log("Healing");
+            Health += amount;
+            if (Health >= MaxHealth){
+                Health = MaxHealth;
+            }
+            UpdateHealthUI();
         }
 
         private void UpdateHealthUI()

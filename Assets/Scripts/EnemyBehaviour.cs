@@ -49,8 +49,6 @@ public class EnemyBehaviour : MonoBehaviour
                 registeredHit = false;
             }
             
-            //Debug.Log("entrei aqui");
-            //Debug.Log( Mathf.Round(animator.GetCurrentAnimatorStateInfo(0).normalizedTime * 10) / 10);
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 alreadyAttacked = false;
@@ -75,7 +73,6 @@ public class EnemyBehaviour : MonoBehaviour
             transform.rotation = Quaternion.Euler(eulerAngles);
 
             transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            Debug.Log("MoveSpeed: " + moveSpeed);
 
             animator.SetBool("is_attacking", false);
             animator.SetBool("is_running", true);
@@ -98,7 +95,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Die()
     {
-        //waveSpawner.UpdateNumEnemiesAlive();
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
     }
