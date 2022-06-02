@@ -11,12 +11,14 @@ public class ArenaTrigger : MonoBehaviour
 
     public void performAction()
     {
-        string arenaCurrency = sceneSwitch.ArenaName+"Currency";
-        int currentCurrency = PlayerPrefs.GetInt(arenaCurrency);
+        if(player.currencyCounter != 0){
+            string arenaCurrency = sceneSwitch.ArenaName+"Currency";
+            int currentCurrency = PlayerPrefs.GetInt(arenaCurrency);
 
-        PlayerPrefs.SetInt(arenaCurrency, currentCurrency + player.currencyCounter);
-        Debug.Log("Successfully extracted extra " + player.currencyCounter + " " + arenaCurrency);
-        Debug.Log("Current " + arenaCurrency + ": " + PlayerPrefs.GetInt(arenaCurrency));
+            PlayerPrefs.SetInt(arenaCurrency, currentCurrency + player.currencyCounter);
+            Debug.Log("Successfully extracted extra " + player.currencyCounter + " " + arenaCurrency);
+            Debug.Log("Current " + arenaCurrency + ": " + PlayerPrefs.GetInt(arenaCurrency));
+        }
         sceneSwitch.LoadHubScene();
     }
 

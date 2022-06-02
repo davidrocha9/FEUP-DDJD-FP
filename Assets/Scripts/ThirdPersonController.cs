@@ -159,6 +159,9 @@ namespace StarterAssets
         [SerializeField]
         private GameObject bloodOverlay;
 
+        private ArenaTrigger onDeathTrigger;
+        private bool foundArenaTrigger = false;
+
         private bool playerGotHit = false;
 
         private bool IsCurrentDeviceMouse
@@ -617,6 +620,10 @@ namespace StarterAssets
         {
             trigger = other.GetComponent<Trigger>();
             arenaTrigger = other.GetComponent<ArenaTrigger>();
+            if(!foundArenaTrigger){
+                foundArenaTrigger = true;
+                onDeathTrigger = arenaTrigger;
+            }
         }
 
         void OnTriggerExit(Collider other){
@@ -635,7 +642,7 @@ namespace StarterAssets
             bloodOverlay.SetActive(true);
             playerGotHit = true;
 
-            if (Health < 0)
+            if (Health <= 0)
             {
                 Die();
             }
@@ -649,6 +656,9 @@ namespace StarterAssets
         private void Die()
         {
             Debug.Log("Player died");
+            currencyCounter = 0;
+            onDeathTrigger.performAction();
+
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit){
