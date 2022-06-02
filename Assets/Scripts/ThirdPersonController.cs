@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using System.Collections;
+using UnityEngine.UI;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -143,6 +144,9 @@ namespace StarterAssets
 
         [SerializeField]
         private WaveSpawner waveSpawner;
+
+        [SerializeField]
+        private Slider healthBar;
 
         private Vector2 screenCenter;
 
@@ -625,6 +629,7 @@ namespace StarterAssets
             Debug.Log("Player was hit");
             Health -= damage;
             
+            UpdateHealthUI();
             bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1 + Health / 100.0f, 1 + Health / 100.0f, 1);
 
             bloodOverlay.SetActive(true);
@@ -634,6 +639,11 @@ namespace StarterAssets
             {
                 Die();
             }
+        }
+
+        private void UpdateHealthUI()
+        {
+            healthBar.value = (int) Health;
         }
 
         private void Die()

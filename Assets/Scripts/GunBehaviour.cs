@@ -36,8 +36,11 @@ public class GunBehaviour : MonoBehaviour
     [SerializeField]
     private LayerMask aimColliderMask = new LayerMask();
 
+    WeaponRecoil recoil;
+
     void Start()
     {
+        recoil = GetComponent<WeaponRecoil>();
         FillAmmo();
         screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
@@ -47,6 +50,7 @@ public class GunBehaviour : MonoBehaviour
         if (currentAmmo <= 0) return;
         currentAmmo--;
         muzzleFlash.Play();
+        recoil.TriggerRecoil();
         Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, range, aimColliderMask)){
