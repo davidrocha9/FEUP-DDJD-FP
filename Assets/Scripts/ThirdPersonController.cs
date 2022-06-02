@@ -148,6 +148,9 @@ namespace StarterAssets
         [SerializeField]
         private Slider healthBar;
 
+        [SerializeField]
+        private Text currencyAmountUI;
+
         private Vector2 screenCenter;
 
         [SerializeField]
@@ -657,8 +660,14 @@ namespace StarterAssets
         {
             Debug.Log("Player died");
             currencyCounter = 0;
+            updateCurrencyUI();
             onDeathTrigger.performAction();
 
+        }
+
+        private void updateCurrencyUI()
+        {
+            currencyAmountUI.text = currencyCounter.ToString();
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit){
@@ -672,6 +681,7 @@ namespace StarterAssets
         void increaseCurrency(){
             currencyCounter++;
             Debug.Log("Currrent Currency: " + currencyCounter);
+            updateCurrencyUI();
         }
     }
 }

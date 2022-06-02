@@ -7,11 +7,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Animator animator;
 
-
-    //private WaveSpawner waveSpawner;
-
     public int moveSpeed;
-    //float offset;
+
     Vector3 offset;
 
     public float health;
@@ -30,7 +27,6 @@ public class EnemyBehaviour : MonoBehaviour
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
-        //waveSpawner = GameObject.Find("WaveSpawner").GetComponent<WaveSpawner>();
     }
 
     // Update is called once per frame
@@ -79,6 +75,7 @@ public class EnemyBehaviour : MonoBehaviour
             transform.rotation = Quaternion.Euler(eulerAngles);
 
             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            Debug.Log("MoveSpeed: " + moveSpeed);
 
             animator.SetBool("is_attacking", false);
             animator.SetBool("is_running", true);
