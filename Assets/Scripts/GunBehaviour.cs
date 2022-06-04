@@ -34,6 +34,9 @@ public class GunBehaviour : MonoBehaviour
 
     private GameObject camera;
 
+    //[FMODUnity.EventRef]
+    //public string ShootingEvent = "";
+
     private Vector2 screenCenter;
 
     public ParticleSystem[] impactEffects;
@@ -82,6 +85,7 @@ public class GunBehaviour : MonoBehaviour
         lastShotTime = Time.time;
         currentAmmo--;
         muzzleFlash.Play();
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Gun Shooting/Pistol");
         recoil.TriggerRecoil();
         Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
         RaycastHit hit;

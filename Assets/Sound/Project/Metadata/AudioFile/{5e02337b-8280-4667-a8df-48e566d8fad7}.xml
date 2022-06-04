@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{5e02337b-8280-4667-a8df-48e566d8fad7}">
+		<property name="assetPath">
+			<value>shoot pistol.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.99916099773242628</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{eea4ecd9-99f2-4221-9c6b-e05737d3e66f}</destination>
+		</relationship>
+	</object>
+</objects>

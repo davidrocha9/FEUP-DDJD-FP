@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EventFolder" id="{0a7d3869-8fee-49cd-90db-08be835ff486}">
+		<property name="name">
+			<value>Jump</value>
+		</property>
+		<relationship name="folder">
+			<destination>{59bbe263-100b-409b-b23d-fd4c8dcfb4be}</destination>
+		</relationship>
+	</object>
+</objects>
