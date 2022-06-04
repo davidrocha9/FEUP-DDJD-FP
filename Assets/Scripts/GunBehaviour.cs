@@ -140,7 +140,9 @@ public class GunBehaviour : MonoBehaviour
                 availableAmmo = 0;
                 currentAmmo += availableAmmo;
             }
+            availableAmmoString = availableAmmo.ToString();
         }
+        
         updateReloadUI();
     }
 
