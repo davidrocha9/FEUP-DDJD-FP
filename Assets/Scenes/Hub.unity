@@ -759,7 +759,6 @@ MonoBehaviour:
   defaultNumberOfExtraMagazines: 3
   currentAmmo: 0
   availableAmmo: 0
-  ShootingEvent: 
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1761664262}
