@@ -169,6 +169,9 @@ namespace StarterAssets
         private bool foundArenaTrigger = false;
 
         private bool playerGotHit = false;
+        private bool heartBeat = false, heartBeatUp = true;
+        private float heartBeatRatio = 1.0f;
+        private int hitsNumber = 0;
 
         private bool IsCurrentDeviceMouse
         {
@@ -241,17 +244,43 @@ namespace StarterAssets
             if (playerGotHit)
             {
                 Color temp = bloodOverlay.GetComponent<Image>().color;
-                temp.a -= 0.01f;
+                temp.a -= 0.005f;
                 bloodOverlay.GetComponent<Image>().color = temp;
                 
-                Debug.Log(temp.a);
                 if (temp.a < 0)
                 {
                     playerGotHit = false;
-                    temp.a = 1.0f;
-                    bloodOverlay.GetComponent<Image>().color = temp;
                     bloodOverlay.SetActive(false);
+                    hitsNumber--;
                 }
+            }
+
+            if (heartBeat)
+            {
+                if (Health > 20)
+                {
+                    heartBeat = false;
+                    playerGotHit = true;
+                    return;
+                }
+
+                if (heartBeatRatio >= 1.0f || heartBeatRatio <= 0.0f)
+                {
+                    heartBeatUp = !heartBeatUp;
+                }
+                
+                if (heartBeatUp)
+                {
+                    heartBeatRatio += 0.01f;
+                }
+                else
+                {
+                    heartBeatRatio -= 0.01f;
+                }
+
+                Color temp = bloodOverlay.GetComponent<Image>().color;
+                bloodOverlay.GetComponent<Image>().color = temp;
+                bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1.0f + Health / 100.0f + heartBeatRatio, 1.0f + Health / 100.0f + heartBeatRatio * 3, 1);
             }
         }
 
@@ -643,17 +672,55 @@ namespace StarterAssets
             Debug.Log("Player was hit");
             Health -= damage;
 
-            healingOverTime.PlayerTookDamage();
-            
-            UpdateHealthUI();
-            bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1 + Health / 100.0f, 1 + Health / 100.0f, 1);
-
-            bloodOverlay.SetActive(true);
-            playerGotHit = true;
-
             if (Health <= 0)
             {
                 Die();
+                return;
+            }
+
+            healingOverTime.PlayerTookDamage();
+            
+            UpdateHealthUI();
+
+            if (Health > 20 && !heartBeat)
+            {
+                float scale;
+                if (hitsNumber >= 5)
+                {
+                    scale = 0.0f;
+                }
+                else
+                {
+                    scale = 2.5f - hitsNumber * 0.5f;
+                }
+                
+                
+                bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1);
+                Color temp = bloodOverlay.GetComponent<Image>().color;
+                if (hitsNumber >= 5)
+                {
+                    temp.a = 0.75f;
+                }
+                else
+                {
+                    temp.a = 0.5f + hitsNumber * 0.05f;
+                }
+
+                bloodOverlay.GetComponent<Image>().color = temp;
+
+                bloodOverlay.SetActive(true);
+                playerGotHit = true;
+                hitsNumber++;
+            }
+            else
+            {
+                bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                Color temp = bloodOverlay.GetComponent<Image>().color;
+                temp.a = 0.5f;
+                bloodOverlay.GetComponent<Image>().color = temp;
+
+                bloodOverlay.SetActive(true);
+                heartBeat = true;
             }
         }
 
