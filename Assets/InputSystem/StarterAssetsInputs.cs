@@ -22,6 +22,16 @@ namespace StarterAssets
 
 		public bool fire;
 
+		public bool weapon1;
+
+		public bool weapon2;
+
+		public bool weapon3;
+
+		public bool weapon4;
+
+		public int weaponScroll;
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -72,6 +82,23 @@ namespace StarterAssets
 		public void OnFire(InputValue value)
 		{
 			FireInput(value.isPressed);
+		}
+
+		public void OnWeapon1(InputValue value){
+			Weapon1Input(value.isPressed);
+		}
+		public void OnWeapon2(InputValue value){
+			Weapon2Input(value.isPressed);
+		}
+		public void OnWeapon3(InputValue value){
+			Weapon3Input(value.isPressed);
+		}
+		public void OnWeapon4(InputValue value){
+			Weapon4Input(value.isPressed);
+		}
+
+		public void OnWeaponScroll(InputValue value){
+			ScrollInput(value.Get<Vector2>());
 		}
 
 #endif
@@ -125,6 +152,35 @@ namespace StarterAssets
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+		}
+
+		public void Weapon1Input(bool weapon1State){
+			weapon1 = weapon1State;
+		}
+
+		public void Weapon2Input(bool weapon2State){
+			weapon2 = weapon2State;
+		}
+
+		public void Weapon3Input(bool weapon3State){
+			weapon3 = weapon3State;
+		}
+
+		public void Weapon4Input(bool weapon4State){
+			weapon4 = weapon4State;
+		}
+
+		public void ScrollInput(Vector2 scrollVec){
+			float scrollValue = scrollVec.y;
+			if(scrollValue > 0){
+				weaponScroll = 1;
+			}
+			if(scrollValue < 0){
+				weaponScroll = -1;
+			}
+			if(scrollValue == 0){
+				weaponScroll = 0;
+			}
 		}
 	}
 	

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 #endif
 
@@ -158,9 +159,22 @@ namespace StarterAssets
 
         [SerializeField]
         private LayerMask aimColliderMask = new LayerMask();
+        
+        [SerializeField]
+        private GunBehaviour PS;
 
         [SerializeField]
-        private GunBehaviour gun;
+        private GunBehaviour AR;
+
+        [SerializeField]
+        private GunBehaviour SG;
+
+        [SerializeField]
+        private GunBehaviour RL;
+
+        private List<GunBehaviour> gunArsenal = new List<GunBehaviour>();
+
+        private int selectedGun = 0;
 
         [SerializeField]
         private GameObject bloodOverlay;
@@ -214,6 +228,17 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            //PS.ApplyUpgrades() // should apply upgrades before adding to the arsenal
+            //AR.ApplyUpgrades()
+            //SG.ApplyUpgrades()
+            //RL.ApplyUpgrades()
+
+            gunArsenal.Add(PS);
+            gunArsenal.Add(AR);
+            //gunArsenal.Add(AR);
+            //gunArsenal.Add(SG);
+            //gunArsenal.Add(RL);
+            gunArsenal[selectedGun].gameObject.SetActive(true);
         }
 
         private void Update()
@@ -226,12 +251,13 @@ namespace StarterAssets
             Aim();
             Fire();
             Interact();
+            SwitchWeapon();
             StartRound();
             Reload();
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
-                if (fireTimer >= 0.2f){
+                if (fireTimer >= 0.3f){
                     
                     canFire = true;
                     fireTimer = 0;
@@ -400,7 +426,7 @@ namespace StarterAssets
         {
             if (_input.reload && !reload){
                 reload = true;
-                gun.Reload();
+                gunArsenal[selectedGun].Reload();
             } else {
                 reload = false;
                 _input.reload = false;
@@ -411,7 +437,7 @@ namespace StarterAssets
         {
             if (_input.startRound && !startRound){
                 startRound = true;
-                gun.FillAmmo();
+                gunArsenal[selectedGun].FillAmmo();
                 nextRound = waveSpawner.StartRound(nextRound);
             } else {
                 startRound = false;
@@ -456,7 +482,6 @@ namespace StarterAssets
 
         private void Fire()
         {
-            
             if (_input.fire) {
                 rotateWhenMoving = false;
 
@@ -464,7 +489,7 @@ namespace StarterAssets
 
                 Vector2 shootingSpreadVec = new Vector2(0, 0);
                 if (!_input.aim){
-                    shootingSpreadVec = new Vector2(Random.Range(-gun.shootingSpread, gun.shootingSpread), Random.Range(-gun.shootingSpread, gun.shootingSpread));
+                    shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread), Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread));
                 }
 
                 // Rotate the player to face where he is aiming
@@ -480,7 +505,7 @@ namespace StarterAssets
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
                 _animator.SetBool(_animIDShoot, true);
                 if(canFire){
-                    gun.Shoot(shootingSpreadVec);
+                    gunArsenal[selectedGun].Shoot(shootingSpreadVec);
                     canFire = false;
                 }
             }
@@ -562,6 +587,40 @@ namespace StarterAssets
             if (_verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+
+        private void SwitchWeapon(){
+            if(_input.weapon1){
+                selectedGun = 0;
+            }
+            else if(_input.weapon2){
+                if(gunArsenal.Count >= 2){
+                    selectedGun = 1;
+                }
+            }
+            else if(_input.weapon3){
+                if(gunArsenal.Count >= 3){
+                    selectedGun = 2;
+                }                
+            }
+            else if(_input.weapon4){
+                if(gunArsenal.Count >= 4){
+                    selectedGun = 3;
+                }                            
+            }
+            if(_input.weaponScroll != 0){
+                selectedGun = (selectedGun + gunArsenal.Count + _input.weaponScroll) % gunArsenal.Count;
+            }
+            for (int i = 0; i < gunArsenal.Count; i++)
+            {
+                if(i == selectedGun){
+                    gunArsenal[selectedGun].gameObject.SetActive(true);
+                    gunArsenal[selectedGun].updateReloadUI();
+                }
+                else{
+                    gunArsenal[i].gameObject.SetActive(false);
+                }
             }
         }
 
