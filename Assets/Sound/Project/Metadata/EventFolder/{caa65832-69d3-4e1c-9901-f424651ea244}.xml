@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EventFolder" id="{caa65832-69d3-4e1c-9901-f424651ea244}">
+		<property name="name">
+			<value>Pick up Currencies</value>
+		</property>
+		<relationship name="folder">
+			<destination>{8f4b2059-7278-47b5-88a9-212ddd7b7034}</destination>
+		</relationship>
+	</object>
+</objects>

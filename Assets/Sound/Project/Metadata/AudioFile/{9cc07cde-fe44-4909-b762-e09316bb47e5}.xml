@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{9cc07cde-fe44-4909-b762-e09316bb47e5}">
+		<property name="assetPath">
+			<value>Medieval_demo_1.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>27.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{eea4ecd9-99f2-4221-9c6b-e05737d3e66f}</destination>
+		</relationship>
+	</object>
+</objects>
