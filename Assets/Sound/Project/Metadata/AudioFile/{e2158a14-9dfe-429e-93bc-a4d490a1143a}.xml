@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e2158a14-9dfe-429e-93bc-a4d490a1143a}">
+		<property name="assetPath">
+			<value>EndOfTheWorld-001.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>34.461541666666669</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{eea4ecd9-99f2-4221-9c6b-e05737d3e66f}</destination>
+		</relationship>
+	</object>
+</objects>
