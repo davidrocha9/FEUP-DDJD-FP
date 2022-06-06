@@ -187,6 +187,15 @@ namespace StarterAssets
         private float heartBeatRatio = 1.0f;
         private int hitsNumber = 0;
 
+        // Sound Variables
+
+        private FMOD.Studio.EventInstance walkSound;
+        private bool walking = false;
+
+        private bool jumping = false;
+
+        private FMOD.Studio.PLAYBACK_STATE pbState;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -205,6 +214,7 @@ namespace StarterAssets
 
             screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             healingOverTime = GetComponent<HealingOverTime>();
+            walkSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/General Sounds/Character Related/Footsteps/Grass");
 
             // get a reference to our main camera
             if (_mainCamera == null)
@@ -369,7 +379,26 @@ namespace StarterAssets
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (_input.move == Vector2.zero){
+                walkSound.getPlaybackState(out pbState);
+                targetSpeed = 0.0f;
+                // Parar o som
+                walking = false;
+                if (pbState == FMOD.Studio.PLAYBACK_STATE.PLAYING){
+                    Debug.Log("Sound stopping");
+                    //walkSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                }
+            } else {
+                if (!walking){
+                    Debug.Log("Sound starting");
+                    walking = true;
+                    // Comecar som
+                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(walkSound, transform);
+                    walkSound.start();
+                    walkSound.release();
+                }
+            }
+
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -568,6 +597,7 @@ namespace StarterAssets
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     
+                    
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     
                     if (_hasAnimator)
@@ -577,8 +607,10 @@ namespace StarterAssets
                         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Jump")) _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     }
 
-
-                    
+                    if (!jumping)
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Jump/Jump");
+                    jumping = true;
+                                    
 
                     // update animator if using character
                 }
@@ -591,6 +623,7 @@ namespace StarterAssets
             }
             else
             {
+                jumping = false;
                 // reset the jump timeout timer
                 _jumpTimeoutDelta = JumpTimeout;
 
@@ -699,6 +732,7 @@ namespace StarterAssets
             if (arenaTrigger!= null){
                 if((nextRound-1) % 5 == 0 && !startRound){
                     Debug.Log("You're okay to extract");
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                     arenaTrigger.performAction();
                 }
                 else{
@@ -707,6 +741,7 @@ namespace StarterAssets
             }
             if (trigger!= null){
                 Debug.Log("Entering Arena");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                 trigger.performAction();
             }
         }
