@@ -820,7 +820,7 @@ namespace StarterAssets
 
         public void Heal(float amount)
         {
-            Debug.Log("Healing");
+            //Debug.Log("Healing");
             Health += amount;
             if (Health >= MaxHealth){
                 Health = MaxHealth;

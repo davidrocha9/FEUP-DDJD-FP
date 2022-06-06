@@ -1,19 +1,18 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class SceneSwitch : MonoBehaviour
 {
+    public static SceneSwitch Instance;
 
     [SerializeField]
-    private GameObject loadingUI;
+    private GameObject _loaderCanvas;
 
     [SerializeField]
-    private Image loadingBarFill;
-
-    private AsyncOperation sceneToLoad = null;
+    private Slider _progressBar;
 
     public string ArenaName;
 
@@ -31,33 +30,80 @@ public class SceneSwitch : MonoBehaviour
             PlayerPrefs.SetInt("RumbleCurrency", 0);
         }
         PlayerPrefs.Save();
+
+        if (Instance == null) 
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
 
     public void ShowLoadingScreen()
     {
-        loadingUI.SetActive(true);
+        //loadingUI.SetActive(true);
     }
 
     public void LoadHubScene()
     {
-        sceneToLoad = SceneManager.LoadSceneAsync("Hub");
-        StartCoroutine(LoadingScreen());
+        //sceneToLoad = SceneManager.LoadSceneAsync("Hub");
+        //StartCoroutine(LoadingScreen());
     }
 
-    public void LoadArenaScene()
+    public async void LoadArenaScene()
     {
-        sceneToLoad = SceneManager.LoadSceneAsync(ArenaName);
-        StartCoroutine(LoadingScreen());
+        _loaderCanvas.SetActive(true);
+        var scene = SceneManager.LoadSceneAsync(ArenaName);
+        scene.allowSceneActivation = false;
+
+        do {
+            await Task.Delay(100);
+            //_progressBar.value = scene.progress;
+            _progressBar.value += 0.05f;
+        } while (scene.progress < 0.9f || _progressBar.value < 0.9f);
+
+        await Task.Delay(1000);
+
+        scene.allowSceneActivation = true;
+    }
+
+    void Update(){
+        if (SceneManager.GetActiveScene().name != ArenaName)
+            return;
+
+        if (_loaderCanvas == null)
+        {
+            _loaderCanvas = GameObject.FindWithTag("LoadingCanvas");
+        }
+
+        if (_progressBar == null)
+        {
+            _progressBar = GameObject.FindWithTag("LoadingBar").GetComponent<Slider>();
+        }
+
+        switch(ArenaName) {
+            case "Colliseum":
+                if (_loaderCanvas.active)
+                {
+                    _loaderCanvas.GetComponent<Animator>().Play("LoadingFadeOut");
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     IEnumerator LoadingScreen()
     {
-        while (!sceneToLoad.isDone){
+        /*while (!sceneToLoad.isDone){
             loadingBarFill.fillAmount = sceneToLoad.progress;
             yield return null;
-        }
+        }*/
+        yield return null;
     }
-
+    
     public void setArenaName(string name){
         ArenaName = name;
     }
