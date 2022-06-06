@@ -14,6 +14,8 @@ public class SceneSwitch : MonoBehaviour
     [SerializeField]
     private Slider _progressBar;
 
+    private AsyncOperation sceneToLoad = null;
+
     public string ArenaName;
 
     void Awake(){
@@ -48,8 +50,8 @@ public class SceneSwitch : MonoBehaviour
 
     public void LoadHubScene()
     {
-        //sceneToLoad = SceneManager.LoadSceneAsync("Hub");
-        //StartCoroutine(LoadingScreen());
+        sceneToLoad = SceneManager.LoadSceneAsync("Hub");
+        StartCoroutine(LoadingScreen());
     }
 
     public async void LoadArenaScene()

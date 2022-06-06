@@ -32,6 +32,9 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform == null)
+            return;
+        
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
             moveSpeed = 0;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;

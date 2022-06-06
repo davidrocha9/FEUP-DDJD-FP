@@ -839,7 +839,6 @@ namespace StarterAssets
             currencyCounter = 0;
             updateCurrencyUI();
             onDeathTrigger.performAction();
-
         }
 
         private void updateCurrencyUI()
