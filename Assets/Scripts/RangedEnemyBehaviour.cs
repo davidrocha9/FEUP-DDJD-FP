@@ -11,6 +11,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     public float range = 10f;
 
+    private bool alreadyShot = false;
+
     Vector3 offset;
 
     public float health;
@@ -20,6 +22,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
     
     [SerializeField]
     private GameObject currencyPrefab;
+
+    [SerializeField]
+    private GameObject bulletPrefab;
 
     private GameObject currencyHolder;
 
@@ -49,12 +54,16 @@ public class RangedEnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.1f )
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.1f && !alreadyShot)
             {
-                registeredHit = false;
+                Shoot();
+            }
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f )
+            {
+                alreadyShot = false;
             }
             
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            /*if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 alreadyAttacked = false;
                 registeredHit = false;
@@ -67,7 +76,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
                     //playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(10);
                 }
                 registeredHit = true;
-            }
+            }*/
         }
 
         if (Vector3.Distance(transform.position, playerTransform.position) > range + 10f){            
@@ -88,6 +97,13 @@ public class RangedEnemyBehaviour : MonoBehaviour
         }
     }
 
+    public void Shoot()
+    {
+        alreadyShot = true;
+        GameObject bullet = Instantiate(bulletPrefab, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        bullet.GetComponent<Rigidbody>().velocity = new Vector3(transform.forward[0], transform.forward[1], transform.forward[2]);
+    }
+
     public void TakeDamage(float damage)
     {
         Debug.Log("Enemy took damage");
@@ -102,7 +118,6 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     private void Die()
     {
-        //GetComponent<CapsuleCollider>().enabled = false;
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
     }
