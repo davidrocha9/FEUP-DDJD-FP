@@ -10,6 +10,7 @@ TagManager:
   - LoadingBar
   - Slider
   - LoadingCanvas
+  - RangedEnemy
   layers:
   - Default
   - TransparentFX
