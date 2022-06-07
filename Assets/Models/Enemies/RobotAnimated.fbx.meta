@@ -15,7 +15,27 @@ ModelImporter:
   - first:
       74: 7168293901883076996
     second: Armature|walking
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 5463a46055713c84a8ab61e81e2a79d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 3691d9233ecb4674fae6da48aabf5f11, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 7610face20271ab4b8f5afeafa5d44e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 4a9e4039f44da6c44b50834dc84b8afa, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
