@@ -86,12 +86,14 @@ public class SceneSwitch : MonoBehaviour
         }
 
         switch(ArenaName) {
+            case "Factory":
             case "Colliseum":
                 if (_loaderCanvas.active)
                 {
                     _loaderCanvas.GetComponent<Animator>().Play("LoadingFadeOut");
                 }
                 break;
+        
             default:
                 break;
         }
