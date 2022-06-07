@@ -54,11 +54,12 @@ public class RangedEnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.1f && !alreadyShot)
+            Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1);
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.4f && !alreadyShot)
             {
                 Shoot();
             }
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f )
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 >= 0.85f)
             {
                 alreadyShot = false;
             }
@@ -79,7 +80,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
             }*/
         }
 
-        if (Vector3.Distance(transform.position, playerTransform.position) > range + 10f){            
+        if (Vector3.Distance(transform.position, playerTransform.position) > range + 10f){
             transform.LookAt(playerTransform);
 
             Vector3 eulerAngles = transform.rotation.eulerAngles;
@@ -92,6 +93,11 @@ public class RangedEnemyBehaviour : MonoBehaviour
             animator.SetBool("is_walking", true);
             
         } else {
+            transform.LookAt(playerTransform);
+
+            Vector3 eulerAngles = transform.rotation.eulerAngles;
+            eulerAngles = new Vector3(0, eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(eulerAngles);
             animator.SetBool("is_walking", false);
             animator.SetBool("is_shooting", true);
         }
@@ -99,9 +105,11 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     public void Shoot()
     {
+        Debug.Log("Shooting");
         alreadyShot = true;
-        GameObject bullet = Instantiate(bulletPrefab, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-        bullet.GetComponent<Rigidbody>().velocity = new Vector3(transform.forward[0], transform.forward[1], transform.forward[2]);
+        Vector3 offset = new Vector3(0.1f, 1, 0.2f);
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + offset, new Quaternion(0, 0, 0, 0));
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
     }
 
     public void TakeDamage(float damage)
