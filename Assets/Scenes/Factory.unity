@@ -2355,7 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7642676462a9de41be9b5a166ee141b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6283154923863768467, guid: 75c4523ca2363194eb6e666cd75626d9, type: 3}
+  enemyPrefab: {fileID: 8746840560697275661, guid: ff267c7942913c84f9a7131650ebbccd, type: 3}
   enemiesHolder: {fileID: 386822086}
   startRoundTextUI: {fileID: 662606318}
   numEnemiesAliveUI: {fileID: 2064717799}
