@@ -90,6 +90,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("Enemy took damage");
+        Debug.Log("Enemy health: " + health.ToString());
         if(!animator.GetBool("is_dead")){
             health -= damage;
             if (health <= 0){
@@ -100,7 +102,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     private void Die()
     {
-        GetComponent<CapsuleCollider>().enabled = false;
+        //GetComponent<CapsuleCollider>().enabled = false;
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
     }

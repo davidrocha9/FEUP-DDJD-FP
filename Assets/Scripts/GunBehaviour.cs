@@ -99,8 +99,12 @@ public class GunBehaviour : MonoBehaviour
                 if (enemy != null){
                     enemy.TakeDamage(damage);
                 }
-            }
-            if(hit.transform.name == "target_test"){
+            } else if (hit.transform.tag == "RangedEnemy"){
+                RangedEnemyBehaviour enemy = hit.transform.GetComponent<RangedEnemyBehaviour>();
+                if (enemy != null){
+                    enemy.TakeDamage(damage);
+                }
+            } else if(hit.transform.name == "target_test"){
                 TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
                 if (target != null){
                     target.TakeDamage(damage);

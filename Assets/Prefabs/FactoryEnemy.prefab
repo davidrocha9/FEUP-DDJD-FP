@@ -86,6 +86,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotAnimated
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f84f7128bdc76049a28ef76a75278dc, type: 3}
+      propertyPath: m_TagString
+      value: RangedEnemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f84f7128bdc76049a28ef76a75278dc, type: 3}
 --- !u!1 &4175767138566689722 stripped
@@ -161,6 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   range: 10
-  health: 100
+  health: 10
   dropPercentage: 20
   currencyPrefab: {fileID: 3803522151357388653, guid: 8cd7200593d8c3440aec7d1d9b5ffb14, type: 3}

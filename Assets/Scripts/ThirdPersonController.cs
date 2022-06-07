@@ -385,12 +385,12 @@ namespace StarterAssets
                 // Parar o som
                 walking = false;
                 if (pbState == FMOD.Studio.PLAYBACK_STATE.PLAYING){
-                    Debug.Log("Sound stopping");
+                    //Debug.Log("Sound stopping");
                     //walkSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                 }
             } else {
                 if (!walking){
-                    Debug.Log("Sound starting");
+                    //Debug.Log("Sound starting");
                     walking = true;
                     // Comecar som
                     FMODUnity.RuntimeManager.AttachInstanceToGameObject(walkSound, transform);
