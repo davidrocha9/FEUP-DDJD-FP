@@ -2,44 +2,73 @@ fileFormatVersion: 2
 guid: fc1531fc2aaed564e8e92c3873a79879
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable:
+  internalIDToNameTable: []
+  externalObjects:
   - first:
-      74: 7845335295760817871
-    second: Armature|Armature|Armature|aimingshooting|Armature|aimingshooting
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dynamic Rust
+    second: {fileID: 2100000, guid: 2251ab1f54976fc4696cdd46dff55efe, type: 2}
   - first:
-      74: -3865573154343166988
-    second: Armature|Armature|Armature|aiming|Armature|aiming
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flat Tech Glow
+    second: {fileID: 2100000, guid: 40f526dd4fc810046ba23908247278cf, type: 2}
   - first:
-      74: 8887383127755921099
-    second: Armature|Armature|Armature|Aimwalk|Armature|Aimwalk
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flat Tech Glow.001
+    second: {fileID: 2100000, guid: a7cce39c5afc43147b3f6e8d2fe56ef0, type: 2}
   - first:
-      74: -6494088238589832014
-    second: Armature|Armature|Armature|fall|Armature|fall
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: b08d1c5ce3d972e4eacd55385fadf26d, type: 2}
   - first:
-      74: 3949184196891408138
-    second: Armature|Armature|Armature|Idle|Armature|Idle
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 9d8ba71ed18f5a24ba3bf2143a937c64, type: 2}
   - first:
-      74: -5370286374201188833
-    second: Armature|Armature|Armature|Jump|Armature|Jump
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: c1cec1ed786c94744ab3d0ab441fbb19, type: 2}
   - first:
-      74: -8015247887383579603
-    second: Armature|Armature|Armature|Run|Armature|Run
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 8588333c8ae68e14db403abeafb396a3, type: 2}
   - first:
-      74: -463953795484638887
-    second: Armature|Armature|Armature|Shooting|Armature|Shooting
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 698485abdfb37a44e9ea19a1ef4ffe13, type: 2}
   - first:
-      74: -2960041776103108386
-    second: Armature|Armature|Armature|standShooting|Armature|standShooting
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: c66f893a28a19ff4f8320d1db1c01946, type: 2}
   - first:
-      74: 6984947060482262584
-    second: Armature|Armature|Armature|StartRun|Armature|StartRun
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 8a9dee21b22976c41909b2dbe66576e7, type: 2}
   - first:
-      74: -7451007683772231959
-    second: Armature|Armature|Armature|StopRun.001|Armature|StopRun.001
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.007
+    second: {fileID: 2100000, guid: 8bd795c9bfb017748951427330ee45ab, type: 2}
   - first:
-      74: -7887650210887804163
-    second: Armature|Armature|Armature|StopRun|Armature|StopRun
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.011
+    second: {fileID: 2100000, guid: e261fdb23e0ec084894bc57f4ecc3e98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lava
+    second: {fileID: 2100000, guid: 6312f08b5ad76ac4ea75b11ec7aeabc7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

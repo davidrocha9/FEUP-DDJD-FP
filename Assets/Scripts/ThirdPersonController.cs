@@ -39,10 +39,6 @@ namespace StarterAssets
 
         public float sensitivity = 1f;
 
-        public AudioClip LandingAudioClip;
-        public AudioClip[] FootstepAudioClips;
-        [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
-
         [Space(10)]
         [Tooltip("The height the player can jump")]
         public float JumpHeight = 1.2f;
@@ -235,8 +231,8 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-
             AssignAnimationIDs();
+            _animator.SetBool("Pistol", true);
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -654,25 +650,35 @@ namespace StarterAssets
 
         private void SwitchWeapon(){
             if(_input.weapon1){
+                _animator.SetBool("Pistol", true);
                 selectedGun = 0;
             }
             else if(_input.weapon2){
                 if(gunArsenal.Count >= 2){
+                    _animator.SetBool("Pistol", false);
                     selectedGun = 1;
                 }
             }
             else if(_input.weapon3){
-                if(gunArsenal.Count >= 3){
+                if(gunArsenal.Count >= 3){                    
+                    _animator.SetBool("Pistol", false);
                     selectedGun = 2;
                 }                
             }
             else if(_input.weapon4){
                 if(gunArsenal.Count >= 4){
+                    _animator.SetBool("Pistol", false);
                     selectedGun = 3;
                 }                            
             }
             if(_input.weaponScroll != 0){
                 selectedGun = (selectedGun + gunArsenal.Count + _input.weaponScroll) % gunArsenal.Count;
+                if(selectedGun == 0){
+                    _animator.SetBool("Pistol", true);
+                }
+                else{
+                    _animator.SetBool("Pistol", false);
+                }
             }
             for (int i = 0; i < gunArsenal.Count; i++)
             {
@@ -709,22 +715,12 @@ namespace StarterAssets
 
         private void OnFootstep(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                if (FootstepAudioClips.Length > 0)
-                {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
-                }
-            }
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Footstep/Footstep");
         }
 
         private void OnLand(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
-            }
+            
         }
 
         private void checkTrigger()
