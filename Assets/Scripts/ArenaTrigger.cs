@@ -19,7 +19,9 @@ public class ArenaTrigger : MonoBehaviour
             Debug.Log("Successfully extracted extra " + player.currencyCounter + " " + arenaCurrency);
             Debug.Log("Current " + arenaCurrency + ": " + PlayerPrefs.GetInt(arenaCurrency));
         }
-        sceneSwitch.LoadHubScene();
+
+        sceneSwitch.setArenaName("Hub");
+        sceneSwitch.LoadArenaScene();
     }
 
 

@@ -1,5 +1,5 @@
-
 using UnityEngine;
+using TMPro;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Animator animator;
 
-    public int moveSpeed;
+    private float moveSpeed;
 
     Vector3 offset;
 
@@ -20,6 +20,12 @@ public class EnemyBehaviour : MonoBehaviour
     private GameObject currencyPrefab;
 
     private GameObject currencyHolder;
+    
+    private GameObject enemies;
+
+    // textmeshprougui with damage on hit
+    [SerializeField]
+    private TextMeshProUGUI damageText;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +33,9 @@ public class EnemyBehaviour : MonoBehaviour
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
+        
+        // Generate random float move speed between 1 and 3 with different random seed for each enemy
+        moveSpeed = Random.Range(1f,3f);
     }
 
     // Update is called once per frame
@@ -61,12 +70,19 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
-                    Debug.Log("hit");
                     playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(10);
                 }
                 registeredHit = true;
             }
         }
+
+        animator.speed = 1;
+        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Run") && moveSpeed > 0)
+        {
+            animator.speed = moveSpeed / 3.0f;
+        }
+
+        Debug.Log(animator.speed);
 
         if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){            
             transform.LookAt(playerTransform);
@@ -84,12 +100,23 @@ public class EnemyBehaviour : MonoBehaviour
             animator.SetBool("is_running", false);
             animator.SetBool("is_attacking", true);
         }
+
+        // damage text position equal to transform position with y offset of 0.5
+        damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
+
+        // damage text rotation equal to transform rotation with 180 degree offset
+        damageText.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, 180, 0));
     }
 
     public void TakeDamage(float damage)
     {
         if(!animator.GetBool("is_dead")){
             health -= damage;
+
+            // change text o textmeshprougui with damage on hit
+            damageText.text = damage.ToString();
+            damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
+
             if (health <= 0){
                 Die();
             }
