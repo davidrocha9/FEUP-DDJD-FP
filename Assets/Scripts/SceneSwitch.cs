@@ -48,12 +48,6 @@ public class SceneSwitch : MonoBehaviour
         //loadingUI.SetActive(true);
     }
 
-    public void LoadHubScene()
-    {
-        sceneToLoad = SceneManager.LoadSceneAsync("Hub");
-        StartCoroutine(LoadingScreen());
-    }
-
     public async void LoadArenaScene()
     {
         _loaderCanvas.SetActive(true);
@@ -75,15 +69,11 @@ public class SceneSwitch : MonoBehaviour
         if (SceneManager.GetActiveScene().name != ArenaName)
             return;
 
-        if (_loaderCanvas == null)
-        {
-            _loaderCanvas = GameObject.FindWithTag("LoadingCanvas");
-        }
+        if (GameObject.FindWithTag("LoadingCanvas") == null || GameObject.FindWithTag("LoadingBar") == null)
+            return;
 
-        if (_progressBar == null)
-        {
-            _progressBar = GameObject.FindWithTag("LoadingBar").GetComponent<Slider>();
-        }
+        _loaderCanvas = GameObject.FindWithTag("LoadingCanvas");
+        _progressBar = GameObject.FindWithTag("LoadingBar").GetComponent<Slider>();
 
         switch(ArenaName) {
             case "Factory":

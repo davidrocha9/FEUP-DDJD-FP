@@ -377,7 +377,7 @@ namespace StarterAssets
                         }
                     }
                 }
-                else if (hit.collider.gameObject.name == "SG")
+                /*else if (hit.collider.gameObject.name == "SG")
                 {
                     SGMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
                     if (!gunArsenal.Contains(SG))
@@ -444,7 +444,7 @@ namespace StarterAssets
                             }
                         }
                     }
-                }
+                }*/
                 else{
                     if(ARMesh != null){
                         ARMesh.material.color = AR.GetComponent<MeshRenderer>().material.color;
@@ -618,14 +618,14 @@ namespace StarterAssets
 
         private void StartRound()
         {
-            if (_input.startRound && !startRound){
+            /*if (_input.startRound && !startRound){
                 startRound = true;
                 //gunArsenal[selectedGun].FillAmmo();
                 nextRound = waveSpawner.StartRound(nextRound);
             } else {
                 startRound = false;
                 _input.startRound = false;
-            }
+            }*/
         }
 
         private void Aim()

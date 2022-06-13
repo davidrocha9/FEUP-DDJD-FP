@@ -8,17 +8,57 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material
-    second: {fileID: 2100000, guid: 19a8e9ef83b5b4843aadcb3d0a0c6f5b, type: 2}
+    second: {fileID: 2100000, guid: 0db5714b88d27f544943d2c0d88f68ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 1b74dafe2c56fb54d96a29aefe8cce5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: black bullet riffle
+    second: {fileID: 2100000, guid: 444b17736cb61944d86a2b1defe71326, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bullet rifle
+    second: {fileID: 2100000, guid: b124abb2e864abe49a34c0e1ab463435, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: caixa
+    second: {fileID: 2100000, guid: fcb00a55d5ee1554cb96dee4c08caac3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: log
+    second: {fileID: 2100000, guid: 19e5c5a5259256945a618698f04633a0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pillar
-    second: {fileID: 2100000, guid: 39885aa0f4ac8e94c9c5d53711bdcd72, type: 2}
+    second: {fileID: 2100000, guid: 1e7214a26a670df409e5ada53623302a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rocket green
+    second: {fileID: 2100000, guid: 528b3605db8d4584eb8be28524e06ae5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shop cloth
+    second: {fileID: 2100000, guid: e341444975a3b634ca3177225830c458, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shop wood
+    second: {fileID: 2100000, guid: c2d960b955886254bb04df30804c4a15, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: wall.001
-    second: {fileID: 2100000, guid: e219dd2ca42735a40bbf535774b878ef, type: 2}
+    second: {fileID: 2100000, guid: dcb530aa36747fa46876e83dd78ad9c0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
