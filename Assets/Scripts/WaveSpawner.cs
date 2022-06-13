@@ -1,8 +1,8 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -179,6 +179,7 @@ public class WaveSpawner : MonoBehaviour
                 case "Factory":
                     // TODO: spawn enemies in factory
                     break;
+            }
         }
         UpdateNumEnemiesAlive();
     }
