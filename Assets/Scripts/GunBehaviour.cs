@@ -8,6 +8,10 @@ public class GunBehaviour : MonoBehaviour
 
     public float range;
 
+    public int weaponPrice;
+
+    public int ammoPrice;
+
     public float shootingSpread;
 
     public int numBulletsPerMagazine;
@@ -51,6 +55,12 @@ public class GunBehaviour : MonoBehaviour
     private Text availableAmmoUI;
 
     [SerializeField]
+    private TextMesh weaponPriceUI;
+
+    [SerializeField]
+    private TextMesh ammoPriceUI;
+
+    [SerializeField]
     private LayerMask aimColliderMask = new LayerMask();
 
     WeaponRecoil recoil;
@@ -58,10 +68,12 @@ public class GunBehaviour : MonoBehaviour
     void Start()
     {
         recoil = GetComponent<WeaponRecoil>();
+        availableAmmoString = "0";
         if(is_pistol){
             availableAmmoString = "∞";
+            FillAmmo();
         }
-        FillAmmo();
+        updateReloadUI();
         screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 
@@ -126,8 +138,10 @@ public class GunBehaviour : MonoBehaviour
     public void Reload()
     {
         if(!reloading){
-            reloadStart = Time.time;
-            reloading = true;
+            if(currentAmmo < numBulletsPerMagazine){
+                reloadStart = Time.time;
+                reloading = true;
+            }
         }
     }
 
@@ -141,13 +155,24 @@ public class GunBehaviour : MonoBehaviour
                 availableAmmo -= ammoNeeded;
                 currentAmmo += ammoNeeded;
             } else {
-                availableAmmo = 0;
                 currentAmmo += availableAmmo;
+                availableAmmo = 0;
             }
             availableAmmoString = availableAmmo.ToString();
         }
-        
         updateReloadUI();
+    }
+
+    public bool BuyAmmo(int ammount){
+        if(numBulletsPerMagazine * defaultNumberOfExtraMagazines >= availableAmmo + ammount){
+            availableAmmo += ammount;
+        }
+        else{
+            return false;
+        }
+        availableAmmoString = availableAmmo.ToString();
+        updateReloadUI();
+        return true;
     }
 
     public void FillAmmo(){

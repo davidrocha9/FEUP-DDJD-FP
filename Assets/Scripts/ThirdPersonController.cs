@@ -155,6 +155,9 @@ namespace StarterAssets
 
         [SerializeField]
         private LayerMask aimColliderMask = new LayerMask();
+
+        [SerializeField]
+        private GameObject blade;
         
         [SerializeField]
         private GunBehaviour PS;
@@ -182,6 +185,11 @@ namespace StarterAssets
         private bool heartBeat = false, heartBeatUp = true;
         private float heartBeatRatio = 1.0f;
         private int hitsNumber = 0;
+        private int weaponCurrency = 0;
+
+        MeshRenderer ARMesh = null;
+        MeshRenderer SGMesh = null;
+        MeshRenderer RLMesh = null;
 
         // Sound Variables
 
@@ -243,7 +251,7 @@ namespace StarterAssets
             //RL.ApplyUpgrades()
 
             gunArsenal.Add(PS);
-            gunArsenal.Add(AR);
+            //gunArsenal.Add(AR);
             //gunArsenal.Add(AR);
             //gunArsenal.Add(SG);
             //gunArsenal.Add(RL);
@@ -259,6 +267,7 @@ namespace StarterAssets
             Move();
             Aim();
             Fire();
+            WeaponShop();
             Interact();
             SwitchWeapon();
             StartRound();
@@ -272,7 +281,6 @@ namespace StarterAssets
                     fireTimer = 0;
                 }
             }
-
             if (playerGotHit)
             {
                 Color temp = bloodOverlay.GetComponent<Image>().color;
@@ -328,6 +336,127 @@ namespace StarterAssets
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDRun = Animator.StringToHash("Run");
             _animIDShoot = Animator.StringToHash("Shoot");
+        }
+
+        private void WeaponShop(){
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+            if (Physics.Raycast(ray, out hit, 20f, aimColliderMask))
+            {
+                if (hit.collider.gameObject.name == "AR")
+                {
+                    ARMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
+                    if (!gunArsenal.Contains(AR))
+                    {
+                        if(weaponCurrency >= AR.weaponPrice){
+                            ARMesh.material.color = Color.green;
+                            if (_input.interact)
+                            {
+                                gunArsenal.Add(AR);
+                                weaponCurrency -= AR.weaponPrice;
+                                gunArsenal[selectedGun].gameObject.SetActive(false);
+                                selectedGun = gunArsenal.Count - 1;
+                                gunArsenal[selectedGun].gameObject.SetActive(true);
+                            }
+                        }
+                        else{
+                            ARMesh.material.color = Color.red;
+                        }
+                    }
+                    else{
+                        ARMesh.material.color = Color.red;
+                    }
+                }
+                else if (hit.collider.gameObject.name == "ARAmmo"){
+                    if(weaponCurrency >= AR.ammoPrice & gunArsenal.Contains(AR)){
+                        if(_input.interact){
+                            if(AR.BuyAmmo(1)){                            
+                                _input.interact = false;
+                                weaponCurrency -= AR.ammoPrice;
+                            }
+                        }
+                    }
+                }
+                else if (hit.collider.gameObject.name == "SG")
+                {
+                    SGMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
+                    if (!gunArsenal.Contains(SG))
+                    {
+                        if(weaponCurrency >= SG.weaponPrice){
+                            SGMesh.material.color = Color.green;
+                            if (_input.interact)
+                            {
+                                gunArsenal.Add(SG);
+                                weaponCurrency -= SG.weaponPrice;
+                                gunArsenal[selectedGun].gameObject.SetActive(false);
+                                selectedGun = gunArsenal.Count - 1;
+                                gunArsenal[selectedGun].gameObject.SetActive(true);
+                            }
+                        }
+                        else{
+                            SGMesh.material.color = Color.red;
+                        }
+                    }
+                    else{
+                        SGMesh.material.color = Color.red;
+                    }
+                }
+                else if (hit.collider.gameObject.name == "SGAmmo"){
+                    if(weaponCurrency >= SG.ammoPrice & gunArsenal.Contains(SG)){
+                        if(_input.interact){
+                            _input.interact = false;
+                            if(SG.BuyAmmo(1)){
+                                weaponCurrency -= SG.ammoPrice;
+                            }
+                        }
+                    }
+                }
+                else if (hit.collider.gameObject.name == "RL")
+                {
+                    RLMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
+                    if (!gunArsenal.Contains(RL))
+                    {
+                        if(weaponCurrency >= RL.weaponPrice){
+                            RLMesh.material.color = Color.green;
+                            if (_input.interact)
+                            {
+                                gunArsenal.Add(RL);
+                                weaponCurrency -= AR.weaponPrice;
+                                gunArsenal[selectedGun].gameObject.SetActive(false);
+                                selectedGun = gunArsenal.Count - 1;
+                                gunArsenal[selectedGun].gameObject.SetActive(true);
+                            }
+                        }
+                        else{
+                            RLMesh.material.color = Color.red;
+                        }
+                    }
+                    else{
+                        RLMesh.material.color = Color.red;
+                    }
+                }
+                else if (hit.collider.gameObject.name == "RLAmmo"){
+                    if(weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL)){
+                        if(_input.interact){
+                            _input.interact = false;
+                            if(RL.BuyAmmo(1)){
+                                weaponCurrency -= RL.ammoPrice;
+                            }
+                        }
+                    }
+                }
+                else{
+                    if(ARMesh != null){
+                        ARMesh.material.color = AR.GetComponent<MeshRenderer>().material.color;
+                    }
+                    /*if(SGMesh != null){
+                        SGMesh.material.color = SG.GetComponent<MeshRenderer>().material.color;
+                    }
+                    if(RLMesh != null){
+                        RLMesh.material.color = RL.GetComponent<MeshRenderer>().material.color;
+                    }*/
+                }
+            }
         }
 
         private void GroundedCheck()
@@ -491,7 +620,7 @@ namespace StarterAssets
         {
             if (_input.startRound && !startRound){
                 startRound = true;
-                gunArsenal[selectedGun].FillAmmo();
+                //gunArsenal[selectedGun].FillAmmo();
                 nextRound = waveSpawner.StartRound(nextRound);
             } else {
                 startRound = false;
@@ -532,6 +661,10 @@ namespace StarterAssets
                 //_animator.SetBool(_animIDRun, true);
                 rotateWhenMoving = true;
             }
+        }
+
+        public void AddWeaponCurrency(int ammount){
+            weaponCurrency+=ammount;
         }
 
         private void Fire()

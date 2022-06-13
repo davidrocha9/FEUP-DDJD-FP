@@ -32,6 +32,8 @@ namespace StarterAssets
 
 		public int weaponScroll;
 
+		public bool melee;
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -99,6 +101,10 @@ namespace StarterAssets
 
 		public void OnWeaponScroll(InputValue value){
 			ScrollInput(value.Get<Vector2>());
+		}
+
+		public void OnMelee(InputValue value){
+			MeleeInput(value.isPressed);
 		}
 
 #endif
@@ -181,6 +187,10 @@ namespace StarterAssets
 			if(scrollValue == 0){
 				weaponScroll = 0;
 			}
+		}
+
+		public void MeleeInput(bool meleeState){
+			melee = meleeState;
 		}
 	}
 	

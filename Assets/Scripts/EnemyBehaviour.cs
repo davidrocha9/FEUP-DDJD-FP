@@ -100,6 +100,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
+        playerTransform.GetComponent<StarterAssets.ThirdPersonController>().AddWeaponCurrency(10);
     }
 
     private void DropCurrency(){

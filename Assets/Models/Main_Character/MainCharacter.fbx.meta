@@ -22,6 +22,9 @@ ModelImporter:
       74: 1079665108409675491
     second: Armature|Jump
   - first:
+      74: 4707415668044453494
+    second: Armature|Meele
+  - first:
       74: 6085600697005787804
     second: Armature|Pistol Aim
   - first:
@@ -31,8 +34,17 @@ ModelImporter:
       74: 8140996013439909520
     second: Armature|Pistol Jump
   - first:
+      74: -5696784025742126476
+    second: Armature|Pistol Jump fall
+  - first:
       74: 56730101710495972
     second: Armature|Pistol Run
+  - first:
+      74: 7332139420686511986
+    second: Armature|Reload
+  - first:
+      74: 8985051283435967226
+    second: Armature|Reload walk
   - first:
       74: -7551964380084998518
     second: Armature|Run
@@ -48,22 +60,7 @@ ModelImporter:
   - first:
       74: -5717071178278073279
     second: Armature|StopRun
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 025500420c9a2404a9e922be44ef87a1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: d9caccbbaf960594aa9f928e7d36948f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blue
-    second: {fileID: 2100000, guid: 245cfdde3c371d34a8942e3bcd242e7e, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -83,7 +80,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -146,13 +143,13 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: Armature
+    rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
