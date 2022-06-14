@@ -377,7 +377,7 @@ namespace StarterAssets
                         }
                     }
                 }
-                /*else if (hit.collider.gameObject.name == "SG")
+                else if (hit.collider.gameObject.name == "SG")
                 {
                     SGMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
                     if (!gunArsenal.Contains(SG))
@@ -411,7 +411,7 @@ namespace StarterAssets
                         }
                     }
                 }
-                else if (hit.collider.gameObject.name == "RL")
+                /*else if (hit.collider.gameObject.name == "RL")
                 {
                     RLMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
                     if (!gunArsenal.Contains(RL))
@@ -449,10 +449,10 @@ namespace StarterAssets
                     if(ARMesh != null){
                         ARMesh.material.color = AR.GetComponent<MeshRenderer>().material.color;
                     }
-                    /*if(SGMesh != null){
+                    if(SGMesh != null){
                         SGMesh.material.color = SG.GetComponent<MeshRenderer>().material.color;
                     }
-                    if(RLMesh != null){
+                    /*if(RLMesh != null){
                         RLMesh.material.color = RL.GetComponent<MeshRenderer>().material.color;
                     }*/
                 }

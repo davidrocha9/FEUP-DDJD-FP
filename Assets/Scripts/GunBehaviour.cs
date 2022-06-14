@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -35,8 +36,8 @@ public class GunBehaviour : MonoBehaviour
     private bool reloading = false;
 
     private float reloadStart;
-
-    private GameObject camera;
+    
+    private Transform cam;
 
     //[FMODUnity.EventRef]
     //public string ShootingEvent = "";
@@ -65,6 +66,18 @@ public class GunBehaviour : MonoBehaviour
 
     WeaponRecoil recoil;
 
+    [Header("Bullet")]
+    public GameObject bullet;
+    public Transform muzzle;
+    public float fadeDuration = 0.2f;
+
+
+    [Header("Shotgun")]
+    public int numBulletsPerShot;
+    public bool is_shotgun;
+    public float innacuracyDistance;
+    
+    
     void Start()
     {
         recoil = GetComponent<WeaponRecoil>();
@@ -75,6 +88,7 @@ public class GunBehaviour : MonoBehaviour
         }
         updateReloadUI();
         screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        cam = Camera.main.transform;
     }
 
     void Update(){
@@ -100,27 +114,66 @@ public class GunBehaviour : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Gun Shooting/Pistol");
         recoil.TriggerRecoil();
         Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, range, aimColliderMask)){
-            ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
-            effect.transform.forward = -transform.forward;
-            Destroy(effect.gameObject, effect.main.duration);
+        Debug.Log(is_shotgun);
+        if (is_shotgun){
+            for (int i = 0; i < numBulletsPerShot; i++){ 
+                RaycastHit hit;
+                Vector3 shootingDir = GetShootingDirection();
+                if (Physics.Raycast(cam.position, shootingDir, out hit, range, aimColliderMask)){
+                    ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
+                    effect.transform.forward = -transform.forward;
+                    Destroy(effect.gameObject, effect.main.duration);
+                    if (hit.transform.tag == "Enemy"){
+                        EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
+                        if (enemy != null){
+                            enemy.TakeDamage(damage);
+                        }
+                    } else if (hit.transform.tag == "RangedEnemy"){
+                        RangedEnemyBehaviour enemy = hit.transform.GetComponent<RangedEnemyBehaviour>();
+                        if (enemy != null){
+                            enemy.TakeDamage(damage);
+                        }
+                    } else if(hit.transform.name == "target_test"){
+                        TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
+                        if (target != null){
+                            target.TakeDamage(damage);
+                        }
+                    }
+                    CreateBullet(hit.point);
+                }
+                else{
+                    CreateBullet(cam.position + shootingDir * range);
+                }   
+            }
+        }
+        else{
+            RaycastHit hit;
+        
+            if (Physics.Raycast(ray, out hit, range, aimColliderMask)){
+                ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
+                effect.transform.forward = -transform.forward;
+                Destroy(effect.gameObject, effect.main.duration);
 
-            if (hit.transform.tag == "Enemy"){
-                EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
-                if (enemy != null){
-                    enemy.TakeDamage(damage);
+                if (hit.transform.tag == "Enemy"){
+                    EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
+                    if (enemy != null){
+                        enemy.TakeDamage(damage);
+                    }
+                } else if (hit.transform.tag == "RangedEnemy"){
+                    RangedEnemyBehaviour enemy = hit.transform.GetComponent<RangedEnemyBehaviour>();
+                    if (enemy != null){
+                        enemy.TakeDamage(damage);
+                    }
+                } else if(hit.transform.name == "target_test"){
+                    TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
+                    if (target != null){
+                        target.TakeDamage(damage);
+                    }
                 }
-            } else if (hit.transform.tag == "RangedEnemy"){
-                RangedEnemyBehaviour enemy = hit.transform.GetComponent<RangedEnemyBehaviour>();
-                if (enemy != null){
-                    enemy.TakeDamage(damage);
-                }
-            } else if(hit.transform.name == "target_test"){
-                TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
-                if (target != null){
-                    target.TakeDamage(damage);
-                }
+                CreateBullet(hit.point);
+            }
+            else{
+                CreateBullet(cam.position + ray.direction * range);
             }
         }
         updateReloadUI();
@@ -184,4 +237,36 @@ public class GunBehaviour : MonoBehaviour
         updateReloadUI();
     }
 
+    Vector3 GetShootingDirection(){
+        Vector3 targetPos = cam.position + cam.forward * range;
+        targetPos = new Vector3(
+            targetPos.x + Random.Range(-innacuracyDistance, innacuracyDistance),
+            targetPos.y + Random.Range(-innacuracyDistance, innacuracyDistance),
+            targetPos.z + Random.Range(-innacuracyDistance, innacuracyDistance)
+        );
+
+        Vector3 direction = targetPos - cam.position;
+        return direction.normalized;
+    }
+
+
+    void CreateBullet(Vector3 end){
+        LineRenderer lr = Instantiate(bullet).GetComponent<LineRenderer>();
+        lr.SetPositions(new Vector3[2] {muzzle.position, end});
+        StartCoroutine(FadeBullet(lr));
+    }
+
+
+    IEnumerator FadeBullet(LineRenderer lr){
+        float alpha = 1;
+        while(alpha > 0){
+            alpha -= Time.deltaTime / fadeDuration;
+            lr.startColor = new Color(lr.startColor.r, lr.startColor.g, lr.startColor.b, alpha);
+            lr.endColor = new Color(lr.endColor.r, lr.endColor.g, lr.endColor.b, alpha);
+            if (alpha <= 0){
+                Destroy(lr.gameObject);
+            }
+            yield return null;
+        }
+    }
 }
