@@ -22161,7 +22161,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -22185,7 +22185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -51396,7 +51396,7 @@ MonoBehaviour:
   currencyAmountUI: {fileID: 924099168}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   blade: {fileID: 0}
   PS: {fileID: 1143410729}
   AR: {fileID: 1024794549}
