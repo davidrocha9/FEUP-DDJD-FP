@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -59,6 +60,8 @@ public class WaveSpawner : MonoBehaviour
         
         //increment elasped time with time delta
         elapsedTime += Time.deltaTime;
+
+        //Debug.Log(elapsedTime);
         
         // if elapsed time bigger than 3 and not round active, set round active to true, reset elapsed time and call startround function
         if (elapsedTime > 3f && !round_active)
@@ -124,6 +127,7 @@ public class WaveSpawner : MonoBehaviour
 
     public int StartRound()
     {
+        Debug.Log("Start round!");
         roundNr++;
         /*if (round_active) return roundNumber;
         last_round = false;*/
@@ -178,6 +182,9 @@ public class WaveSpawner : MonoBehaviour
                     break;
                 case "Factory":
                     // TODO: spawn enemies in factory
+                    GameObject spawned = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), Quaternion.identity);
+                    spawned.transform.SetParent(enemiesHolder.transform);
+                    num_spawned++;
                     break;
             }
         }
@@ -202,5 +209,17 @@ public class WaveSpawner : MonoBehaviour
         //Debug.Log("Round " + round_num.ToString());
     }
 
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        //randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
+    }
 
 }

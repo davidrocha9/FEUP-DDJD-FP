@@ -1,5 +1,8 @@
 
 using UnityEngine;
+using UnityEngine.AI;
+using TMPro;
+
 
 public class RangedEnemyBehaviour : MonoBehaviour
 {
@@ -18,6 +21,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
     public float health;
     public int dropPercentage;
 
+    public float damage = 10f;
+
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
     
     [SerializeField]
@@ -26,11 +31,21 @@ public class RangedEnemyBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject bulletPrefab;
 
+    [SerializeField]
+    private TextMeshProUGUI damageText;
+
+    private Vector3 bulletOffset = new Vector3(0f, 1f, 0f);
+
+    private float upDir =  0f;
+
     private GameObject currencyHolder;
+
+    private NavMeshAgent navMeshAgent;
 
     // Start is called before the first frame update
     void Start()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
@@ -44,6 +59,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
             moveSpeed = 0;
+            navMeshAgent.isStopped = true;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
                 DropCurrency();
@@ -54,8 +70,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
         {
-            Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1);
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.4f && !alreadyShot)
+            //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1);
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.6f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 > 0.4f && !alreadyShot)
             {
                 Shoot();
             }
@@ -80,8 +96,38 @@ public class RangedEnemyBehaviour : MonoBehaviour
             }*/
         }
 
-        if (Vector3.Distance(transform.position, playerTransform.position) > range + 10f){
+        if (Vector3.Distance(transform.position, playerTransform.position) <= range){
+            navMeshAgent.isStopped = true;
             transform.LookAt(playerTransform);
+
+            upDir = transform.forward.y;
+
+            Vector3 eulerAngles = transform.rotation.eulerAngles;
+            eulerAngles = new Vector3(0, eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(eulerAngles);
+            animator.SetBool("is_walking", false);
+            animator.SetBool("is_shooting", true);
+        } else {
+            navMeshAgent.SetDestination(playerTransform.position);
+            navMeshAgent.isStopped = false;
+            transform.LookAt(playerTransform);
+
+            upDir = transform.forward.y;
+
+            Vector3 eulerAngles = transform.rotation.eulerAngles;
+            eulerAngles = new Vector3(0, eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(eulerAngles);
+
+            //transform.position += transform.forward * moveSpeed * Time.deltaTime;
+
+            animator.SetBool("is_shooting", false);
+            animator.SetBool("is_walking", true);
+        }
+
+        /*if (Vector3.Distance(transform.position, playerTransform.position) > range + 10f){
+            transform.LookAt(playerTransform);
+
+            upDir = transform.forward.y;
 
             Vector3 eulerAngles = transform.rotation.eulerAngles;
             eulerAngles = new Vector3(0, eulerAngles.y, 0);
@@ -95,29 +141,41 @@ public class RangedEnemyBehaviour : MonoBehaviour
         } else {
             transform.LookAt(playerTransform);
 
+            upDir = transform.forward.y;
+
             Vector3 eulerAngles = transform.rotation.eulerAngles;
             eulerAngles = new Vector3(0, eulerAngles.y, 0);
             transform.rotation = Quaternion.Euler(eulerAngles);
             animator.SetBool("is_walking", false);
             animator.SetBool("is_shooting", true);
-        }
+        }*/
+        damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
+
+        // damage text rotation equal to transform rotation with 180 degree offset
+        damageText.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, 180, 0));
     }
 
     public void Shoot()
     {
-        Debug.Log("Shooting");
         alreadyShot = true;
         Vector3 offset = new Vector3(0.1f, 1, 0.2f);
-        GameObject bullet = Instantiate(bulletPrefab, transform.position + offset, new Quaternion(0, 0, 0, 0));
-        bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
+        Vector3 dest = transform.forward;
+        dest.y = upDir;
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + bulletOffset, new Quaternion(0, 0, 0, 0));
+        bullet.GetComponent<BulletBehaviour>().setDamage(damage);
+        //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
+        bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
     }
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("Enemy took damage");
-        Debug.Log("Enemy health: " + health.ToString());
+
         if(!animator.GetBool("is_dead")){
             health -= damage;
+
+            damageText.text = damage.ToString();
+            damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
+
             if (health <= 0){
                 Die();
             }

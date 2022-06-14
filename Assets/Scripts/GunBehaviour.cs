@@ -114,7 +114,6 @@ public class GunBehaviour : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Gun Shooting/Pistol");
         recoil.TriggerRecoil();
         Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
-        Debug.Log(is_shotgun);
         if (is_shotgun){
             for (int i = 0; i < numBulletsPerShot; i++){ 
                 RaycastHit hit;

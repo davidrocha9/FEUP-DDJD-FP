@@ -914,7 +914,6 @@ namespace StarterAssets
 
         public void TakeDamage(float damage)
         {
-            Debug.Log("Player was hit");
             Health -= damage;
 
             if (Health <= 0)
