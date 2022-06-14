@@ -54,6 +54,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
             moveSpeed = 0;
+            navMeshAgent.isStopped = true;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
                 DropCurrency();
