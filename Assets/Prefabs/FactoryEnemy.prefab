@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 2635408758254616720}
   - component: {fileID: 1276739261545495120}
   - component: {fileID: 7478343834681510382}
+  - component: {fileID: 4294661374517098503}
   m_Layer: 0
   m_Name: RobotAnimated
   m_TagString: RangedEnemy
@@ -288,6 +289,28 @@ MonoBehaviour:
   dropPercentage: 20
   currencyPrefab: {fileID: 3803522151357388653, guid: 8cd7200593d8c3440aec7d1d9b5ffb14, type: 3}
   bulletPrefab: {fileID: 6334020501270933036, guid: dcdb461bf31e713418eadd4c65ea4d60, type: 3}
+--- !u!195 &4294661374517098503
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702935901999979300}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1793937619974688180
 GameObject:
   m_ObjectHideFlags: 0
