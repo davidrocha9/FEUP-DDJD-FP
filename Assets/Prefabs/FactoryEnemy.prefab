@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 1276739261545495120}
   - component: {fileID: 4294661374517098503}
   - component: {fileID: 735514707975146491}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RobotAnimated
   m_TagString: RangedEnemy
   m_Icon: {fileID: 0}
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 1431063070145292941}
   m_Layer: 0
   m_Name: FactoryEnemy
-  m_TagString: Untagged
+  m_TagString: RangedEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -153,6 +153,8 @@ public class GunBehaviour : MonoBehaviour
                 effect.transform.forward = -transform.forward;
                 Destroy(effect.gameObject, effect.main.duration);
 
+                Debug.Log(hit.transform.tag);
+
                 if (hit.transform.tag == "Enemy"){
                     EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                     if (enemy != null){
