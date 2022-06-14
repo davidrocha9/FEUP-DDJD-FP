@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Skybox
+  m_Name: Factory Skybox
   m_Shader: {fileID: 4800000, guid: 4a0785237205e10448774001d06246db, type: 3}
   m_ShaderKeywords: _SCREENSPACE_ON _SUNDISK_HIGH_QUALITY
   m_LightmapFlags: 4
