@@ -124,6 +124,10 @@ public class RangedEnemyBehaviour : MonoBehaviour
         }
     }
 
+    void OnParticleCollision(){
+            TakeDamage(1);
+    }
+
     private void Die()
     {
         moveSpeed = 0;

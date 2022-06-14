@@ -121,6 +121,10 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    void OnParticleCollision(){
+            TakeDamage(1);
+    }
+
     private void Die()
     {
         moveSpeed = 0;

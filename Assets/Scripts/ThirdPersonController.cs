@@ -909,7 +909,7 @@ namespace StarterAssets
         }
 
         void OnParticleCollision(){
-            Debug.Log("Levei com a particula");
+            TakeDamage(1);
         }
 
         public void TakeDamage(float damage)
