@@ -236,7 +236,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &2635408758254616720
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 948011952703734659}
   - component: {fileID: 7574199013937430373}
   - component: {fileID: 6818819323922872128}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DamageOnHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -882,7 +882,7 @@ GameObject:
   - component: {fileID: 5137103975625620152}
   - component: {fileID: 1187713134530263292}
   - component: {fileID: 334258762845884420}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1369,7 +1369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1431063070145292941}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FactoryEnemy
   m_TagString: RangedEnemy
   m_Icon: {fileID: 0}

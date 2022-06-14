@@ -154,7 +154,7 @@ namespace StarterAssets
         private Vector2 screenCenter;
 
         [SerializeField]
-        private LayerMask aimColliderMask = new LayerMask();
+        private LayerMask aimColliderMask;
 
         [SerializeField]
         private GameObject blade;
@@ -220,6 +220,8 @@ namespace StarterAssets
             screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             healingOverTime = GetComponent<HealingOverTime>();
             walkSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/General Sounds/Character Related/Footsteps/Grass");
+            //string[] names = {"Default", "Enemy"};
+            //aimColliderMask = LayerMask.GetMask(names);
 
             // get a reference to our main camera
             if (_mainCamera == null)
