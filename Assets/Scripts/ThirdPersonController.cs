@@ -896,11 +896,20 @@ namespace StarterAssets
                 foundArenaTrigger = true;
                 onDeathTrigger = arenaTrigger;
             }
+            if (other.gameObject.tag == "Lava")
+            {
+                TakeDamage(Health-1);
+                TakeDamage(Health);
+            }
         }
 
         void OnTriggerExit(Collider other){
             trigger = null;
             arenaTrigger = null;
+        }
+
+        void OnParticleCollision(){
+            Debug.Log("Levei com a particula");
         }
 
         public void TakeDamage(float damage)
