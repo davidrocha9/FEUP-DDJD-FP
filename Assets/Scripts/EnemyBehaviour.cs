@@ -82,8 +82,6 @@ public class EnemyBehaviour : MonoBehaviour
             animator.speed = moveSpeed / 3.0f;
         }
 
-        Debug.Log(animator.speed);
-
         if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){            
             transform.LookAt(playerTransform);
 

@@ -186,6 +186,7 @@ namespace StarterAssets
         private float heartBeatRatio = 1.0f;
         private int hitsNumber = 0;
         private int weaponCurrency = 0;
+        private float fallingY = -1234.56789f;
 
         MeshRenderer ARMesh = null;
         MeshRenderer SGMesh = null;
@@ -272,6 +273,7 @@ namespace StarterAssets
             SwitchWeapon();
             StartRound();
             Reload();
+
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
@@ -706,6 +708,14 @@ namespace StarterAssets
         {
             if (Grounded)
             {
+                if(fallingY != -1234.56789f){
+                    float distanceFallen = fallingY - transform.position.y;
+                    fallingY = -1234.56789f;
+                    Debug.Log("You fell " + distanceFallen + " units");
+                    if(distanceFallen > 4){
+                        TakeDamage(1*Mathf.RoundToInt(distanceFallen));
+                    }
+                }
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
 
@@ -752,6 +762,9 @@ namespace StarterAssets
             }
             else
             {
+                if(!_animator.GetBool(_animIDFreeFall)){
+                    fallingY = transform.position.y;
+                }
                 jumping = false;
                 // reset the jump timeout timer
                 _jumpTimeoutDelta = JumpTimeout;
