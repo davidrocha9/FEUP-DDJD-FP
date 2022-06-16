@@ -188,6 +188,8 @@ namespace StarterAssets
         private int weaponCurrency = 0;
         private float fallingY = -1234.56789f;
 
+        private GameObject[] rumblePlanes;
+
         MeshRenderer ARMesh = null;
         MeshRenderer SGMesh = null;
         MeshRenderer RLMesh = null;
@@ -259,6 +261,18 @@ namespace StarterAssets
             //gunArsenal.Add(SG);
             //gunArsenal.Add(RL);
             gunArsenal[selectedGun].gameObject.SetActive(true);
+            // find all objects with the tag RumblePlane
+            rumblePlanes = GameObject.FindGameObjectsWithTag("RumblePlane");
+            // select one of the rumble planes to spawn the player at
+            if(rumblePlanes != null){
+                int random = Random.Range(0, rumblePlanes.Length);
+            // spawn the player at the selected rumble plane
+                transform.position = new Vector3(rumblePlanes[random].transform.position.x+3.0f, transform.position.y+1.0f, rumblePlanes[random].transform.position.z+3.0f);
+            // if the player is colliding with something, move him a little bit
+                while(Physics.CheckSphere(transform.position, 1.0f)){
+                    transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
+                }
+            }
         }
 
         private void Update()
@@ -902,6 +916,24 @@ namespace StarterAssets
             {
                 TakeDamage(Health-1);
                 TakeDamage(Health);
+            }
+            if(other.gameObject.tag == "RumblePlane"){
+                // find the index of the other object in the rumble planes array
+                int randomRumblePlane = Random.Range(0, rumblePlanes.Length);
+                while(rumblePlanes[randomRumblePlane].name == other.gameObject.name){
+                    randomRumblePlane = Random.Range(0, rumblePlanes.Length);
+                }
+                // teleport the player to the randomRumblePlane
+                transform.position = new Vector3(rumblePlanes[randomRumblePlane].transform.position.x + 1.5f, transform.position.y+1.0f, transform.position.z);
+                // make the player face the opposite direction of the randomRumblePlane
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+                // check if not colliding with anything after teleporting
+                while (Physics.CheckSphere(transform.position, 1.0f))
+                {
+                    float increaseX = Random.Range(-0.2f, 0.2f);
+                    float increaseZ = Random.Range(-0.2f, 0.2f);
+                    transform.position = new Vector3(transform.position.x + increaseX, transform.position.y, transform.position.z+increaseZ);
+                }
             }
         }
 
