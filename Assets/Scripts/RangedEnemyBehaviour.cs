@@ -34,6 +34,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI damageText;
 
+    public ObstacleAvoidanceType AvoidanceType;
+
     private Vector3 bulletOffset = new Vector3(0f, 1f, 0f);
 
     private float upDir =  0f;
@@ -49,6 +51,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
+        navMeshAgent.obstacleAvoidanceType = AvoidanceType;
+        navMeshAgent.avoidancePriority = Random.Range(0, 100);
     }
 
     // Update is called once per frame

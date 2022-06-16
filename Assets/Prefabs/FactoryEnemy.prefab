@@ -281,7 +281,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1702935901999979300}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 2
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -314,6 +314,7 @@ MonoBehaviour:
   currencyPrefab: {fileID: 3803522151357388653, guid: 8cd7200593d8c3440aec7d1d9b5ffb14, type: 3}
   bulletPrefab: {fileID: 6334020501270933036, guid: dcdb461bf31e713418eadd4c65ea4d60, type: 3}
   damageText: {fileID: 7574199013937430373}
+  AvoidanceType: 0
 --- !u!135 &3091436834580645600
 SphereCollider:
   m_ObjectHideFlags: 0
