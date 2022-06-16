@@ -51396,7 +51396,7 @@ MonoBehaviour:
   currencyAmountUI: {fileID: 924099168}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 1
   blade: {fileID: 0}
   PS: {fileID: 1143410729}
   AR: {fileID: 1024794549}
