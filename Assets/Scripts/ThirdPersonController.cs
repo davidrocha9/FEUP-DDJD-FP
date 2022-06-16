@@ -264,7 +264,8 @@ namespace StarterAssets
             // find all objects with the tag RumblePlane
             rumblePlanes = GameObject.FindGameObjectsWithTag("RumblePlane");
             // select one of the rumble planes to spawn the player at
-            if(rumblePlanes != null){
+            Debug.Log(rumblePlanes);
+            if(rumblePlanes != null && rumblePlanes.Length != 0){
                 int random = Random.Range(0, rumblePlanes.Length);
             // spawn the player at the selected rumble plane
                 transform.position = new Vector3(rumblePlanes[random].transform.position.x+3.0f, transform.position.y+1.0f, rumblePlanes[random].transform.position.z+3.0f);

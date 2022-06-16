@@ -145,4 +145,13 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    //on collision enter, if tag is "Player" then ignore collision
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("ayo");
+            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+        }
+    }   
 }
