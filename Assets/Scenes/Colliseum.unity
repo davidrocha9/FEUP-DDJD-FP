@@ -2932,7 +2932,7 @@ MonoBehaviour:
   ammoPriceUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   muzzle: {fileID: 1360140744}
   fadeDuration: 0.3
@@ -3094,7 +3094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.5950003
+      value: 5.0950003
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3826,7 +3826,7 @@ MonoBehaviour:
   ammoPriceUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   muzzle: {fileID: 519716264}
   fadeDuration: 0.3
@@ -6897,7 +6897,7 @@ MonoBehaviour:
   currencyAmountUI: {fileID: 950499860}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
   blade: {fileID: 168999585}
   PS: {fileID: 1029263299}
   AR: {fileID: 789604365}
@@ -7274,7 +7274,7 @@ MonoBehaviour:
   ammoPriceUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   bullet: {fileID: 195013222}
   muzzle: {fileID: 1440857591}
   fadeDuration: 0.3

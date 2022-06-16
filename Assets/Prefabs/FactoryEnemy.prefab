@@ -198,6 +198,8 @@ GameObject:
   - component: {fileID: 1276739261545495120}
   - component: {fileID: 4294661374517098503}
   - component: {fileID: 735514707975146491}
+  - component: {fileID: 3091436834580645600}
+  - component: {fileID: 6081970431939711541}
   m_Layer: 0
   m_Name: RobotAnimated
   m_TagString: RangedEnemy
@@ -248,9 +250,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.23990478
-  m_Height: 1.5155863
+  m_Height: 1.1978954
   m_Direction: 1
-  m_Center: {x: 0.032003984, y: 0.7629908, z: 0.058418706}
+  m_Center: {x: 0.032003984, y: 0.60414535, z: 0.058418706}
 --- !u!95 &1276739261545495120
 Animator:
   serializedVersion: 3
@@ -312,6 +314,65 @@ MonoBehaviour:
   currencyPrefab: {fileID: 3803522151357388653, guid: 8cd7200593d8c3440aec7d1d9b5ffb14, type: 3}
   bulletPrefab: {fileID: 6334020501270933036, guid: dcdb461bf31e713418eadd4c65ea4d60, type: 3}
   damageText: {fileID: 7574199013937430373}
+--- !u!135 &3091436834580645600
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702935901999979300}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.17122626
+  m_Center: {x: 0.003003776, y: 1.3934286, z: 0.10944086}
+--- !u!114 &6081970431939711541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702935901999979300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992984b5ef794a040b79e02988ed36a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Method: 2
+  m_Curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.02350987
+      outSlope: 0.02350987
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49455142
+      value: 0.01162684
+      inSlope: 0.0010685213
+      outSlope: 0.0010685213
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.0008239746
+      inSlope: -0.021372827
+      outSlope: -0.021372827
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1793937619974688180
 GameObject:
   m_ObjectHideFlags: 0

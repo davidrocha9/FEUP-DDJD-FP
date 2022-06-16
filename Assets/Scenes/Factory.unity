@@ -22838,7 +22838,7 @@ MonoBehaviour:
   ammoPriceUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   muzzle: {fileID: 1462629463}
   fadeDuration: 0.3
@@ -23270,7 +23270,7 @@ MonoBehaviour:
   ammoPriceUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   muzzle: {fileID: 1584837227}
   fadeDuration: 0.2
@@ -23776,7 +23776,7 @@ MonoBehaviour:
   ammoPriceUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   muzzle: {fileID: 1541978666}
   fadeDuration: 0.2

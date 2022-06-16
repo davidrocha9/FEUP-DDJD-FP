@@ -12,6 +12,7 @@ TagManager:
   - LoadingCanvas
   - RangedEnemy
   - Lava
+  - RangedEnemyHead
   layers:
   - Default
   - TransparentFX

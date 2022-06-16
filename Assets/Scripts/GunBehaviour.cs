@@ -154,16 +154,25 @@ public class GunBehaviour : MonoBehaviour
                 Destroy(effect.gameObject, effect.main.duration);
 
                 Debug.Log(hit.transform.tag);
+                Debug.Log(hit.collider.GetType() == typeof(SphereCollider));
 
                 if (hit.transform.tag == "Enemy"){
+                    float actualDamage = damage;
+                    if (hit.collider.GetType() == typeof(SphereCollider)){
+                        actualDamage *= 2;
+                    }
                     EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                     if (enemy != null){
-                        enemy.TakeDamage(damage);
+                        enemy.TakeDamage(actualDamage);
                     }
                 } else if (hit.transform.tag == "RangedEnemy"){
+                    float actualDamage = damage;
+                    if (hit.collider.GetType() == typeof(SphereCollider)){
+                        actualDamage *= 2;
+                    }
                     RangedEnemyBehaviour enemy = hit.transform.GetComponent<RangedEnemyBehaviour>();
                     if (enemy != null){
-                        enemy.TakeDamage(damage);
+                        enemy.TakeDamage(actualDamage);
                     }
                 } else if(hit.transform.name == "target_test"){
                     TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();

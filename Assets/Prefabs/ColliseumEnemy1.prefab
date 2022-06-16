@@ -525,6 +525,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
   m_PrefabInstance: {fileID: 3743126699823556194}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &424693683028588057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3897462237488877691, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
+  m_PrefabInstance: {fileID: 3743126699823556194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5133781598840399751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8416272007918961125, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
+  m_PrefabInstance: {fileID: 3743126699823556194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1041175919699581380
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424693683028588057}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.17247538
+  m_Center: {x: 0.0047511877, y: 0.089936964, z: 0.00072585366}
 --- !u!54 &3743126699435421661
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -540,7 +563,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &3743126699435421635
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -551,10 +574,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.47242737
-  m_Height: 1.9190369
+  m_Radius: 0.40795898
+  m_Height: 1.4446716
   m_Direction: 1
-  m_Center: {x: 0.05078125, y: 0.97435, z: 0.023208618}
+  m_Center: {x: 0.061767578, y: 0.73716736, z: 0.13114929}
 --- !u!95 &8120856378398256185
 Animator:
   serializedVersion: 3
@@ -590,3 +613,16 @@ MonoBehaviour:
   dropPercentage: 20
   currencyPrefab: {fileID: 2085789137917411795, guid: c6ffb418751f5454aae99058014afa5a, type: 3}
   damageText: {fileID: 678008008990873827}
+--- !u!135 &8432703954479249097
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5133781598840399751}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 127.54728
+  m_Center: {x: 61.219387, y: 218.58267, z: 113.1668}
