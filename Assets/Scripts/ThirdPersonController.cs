@@ -267,11 +267,7 @@ namespace StarterAssets
             if(rumblePlanes != null && rumblePlanes.Length != 0){
                 int random = Random.Range(0, rumblePlanes.Length);
             // spawn the player at the selected rumble plane
-                transform.position = new Vector3(rumblePlanes[random].transform.position.x+3.0f, transform.position.y+1.0f, rumblePlanes[random].transform.position.z+3.0f);
-            // if the player is colliding with something, move him a little bit
-                while(Physics.CheckSphere(transform.position, 1.0f)){
-                    transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
-                }
+                transform.position = rumblePlanes[random].gameObject.GetComponent<RumblePlane>().getSpawnPosition();
             }
         }
 
@@ -924,16 +920,10 @@ namespace StarterAssets
                     randomRumblePlane = Random.Range(0, rumblePlanes.Length);
                 }
                 // teleport the player to the randomRumblePlane
-                transform.position = new Vector3(rumblePlanes[randomRumblePlane].transform.position.x + 1.5f, transform.position.y+1.0f, transform.position.z);
-                // make the player face the opposite direction of the randomRumblePlane
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-                // check if not colliding with anything after teleporting
-                while (Physics.CheckSphere(transform.position, 1.0f))
-                {
-                    float increaseX = Random.Range(-0.2f, 0.2f);
-                    float increaseZ = Random.Range(-0.2f, 0.2f);
-                    transform.position = new Vector3(transform.position.x + increaseX, transform.position.y, transform.position.z+increaseZ);
-                }
+                _controller.enabled = false;
+                transform.position = rumblePlanes[randomRumblePlane].gameObject.GetComponent<RumblePlane>().getTeleportPosition();
+                _controller.enabled = true;                
+                            
             }
         }
 
