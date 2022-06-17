@@ -188,6 +188,8 @@ namespace StarterAssets
         private int weaponCurrency = 0;
         private float fallingY = -1234.56789f;
 
+        private GameObject[] rumblePlanes;
+
         MeshRenderer ARMesh = null;
         MeshRenderer SGMesh = null;
         MeshRenderer RLMesh = null;
@@ -259,6 +261,14 @@ namespace StarterAssets
             //gunArsenal.Add(SG);
             //gunArsenal.Add(RL);
             gunArsenal[selectedGun].gameObject.SetActive(true);
+            // find all objects with the tag RumblePlane
+            rumblePlanes = GameObject.FindGameObjectsWithTag("RumblePlane");
+            // select one of the rumble planes to spawn the player at
+            if(rumblePlanes != null && rumblePlanes.Length != 0){
+                int random = Random.Range(0, rumblePlanes.Length);
+            // spawn the player at the selected rumble plane
+                transform.position = rumblePlanes[random].gameObject.GetComponent<RumblePlane>().getSpawnPosition();
+            }
         }
 
         private void Update()
@@ -902,6 +912,18 @@ namespace StarterAssets
             {
                 TakeDamage(Health-1);
                 TakeDamage(Health);
+            }
+            if(other.gameObject.tag == "RumblePlane"){
+                // find the index of the other object in the rumble planes array
+                int randomRumblePlane = Random.Range(0, rumblePlanes.Length);
+                while(rumblePlanes[randomRumblePlane].name == other.gameObject.name){
+                    randomRumblePlane = Random.Range(0, rumblePlanes.Length);
+                }
+                // teleport the player to the randomRumblePlane
+                _controller.enabled = false;
+                transform.position = rumblePlanes[randomRumblePlane].gameObject.GetComponent<RumblePlane>().getTeleportPosition();
+                _controller.enabled = true;                
+                            
             }
         }
 
