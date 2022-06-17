@@ -104,6 +104,9 @@ public class GunBehaviour : MonoBehaviour
     {
         // print gameobject layer
         Debug.Log(gameObject.layer);
+
+        Debug.Log("Spread: " + shootingSpreadVec);
+        Debug.Log("Point: " + (screenCenter + shootingSpreadVec));
         
         Debug.Log("Shooting");
         if (currentAmmo <= 0 | reloading){
@@ -154,11 +157,8 @@ public class GunBehaviour : MonoBehaviour
         
             if (Physics.Raycast(ray, out hit, range, aimColliderMask)){
                 ParticleSystem effect = Instantiate(impactEffects[0], hit.point, Quaternion.identity);
-                effect.transform.forward = -transform.forward;
+                effect.transform.forward = hit.normal;
                 Destroy(effect.gameObject, effect.main.duration);
-
-                Debug.Log(hit.transform.tag);
-                Debug.Log(hit.collider.GetType() == typeof(SphereCollider));
 
                 if (hit.transform.tag == "Enemy"){
                     float actualDamage = damage;

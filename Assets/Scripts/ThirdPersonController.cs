@@ -694,7 +694,7 @@ namespace StarterAssets
                 }
 
                 // Rotate the player to face where he is aiming
-                Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
+                Ray ray = Camera.main.ScreenPointToRay(screenCenter);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
                     mouseGlobalPosition = hit.point;

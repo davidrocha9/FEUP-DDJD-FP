@@ -2671,7 +2671,7 @@ MonoBehaviour:
   range: 100
   weaponPrice: 0
   ammoPrice: 0
-  shootingSpread: 15
+  shootingSpread: 40
   numBulletsPerMagazine: 20
   defaultNumberOfExtraMagazines: 3
   currentAmmo: 0
@@ -3569,7 +3569,7 @@ MonoBehaviour:
   range: 30
   weaponPrice: 0
   ammoPrice: 0
-  shootingSpread: 5
+  shootingSpread: 20
   numBulletsPerMagazine: 12
   defaultNumberOfExtraMagazines: 0
   currentAmmo: 0
@@ -7293,7 +7293,7 @@ MonoBehaviour:
   range: 10
   weaponPrice: 0
   ammoPrice: 0
-  shootingSpread: 15
+  shootingSpread: 50
   numBulletsPerMagazine: 5
   defaultNumberOfExtraMagazines: 3
   currentAmmo: 0
