@@ -11,7 +11,13 @@ public class EnemyBehaviour : MonoBehaviour
 
     Vector3 offset;
 
-    public float health;
+    [Header("Enemy Stats")]
+    public float baseHealth = 100f;
+    public float baseDamage = 5f;
+    public float healthIncreasePerRound = 5f;
+    public float damageIncreasePerRound = 2f;
+    private float health;
+    private float damage;
     public int dropPercentage;
 
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
@@ -30,6 +36,8 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = baseHealth;
+        damage = baseDamage;
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
@@ -70,7 +78,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(10);
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage);
                 }
                 registeredHit = true;
             }
@@ -153,5 +161,10 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.Log("ayo");
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
         }
-    }   
+    }
+
+    public void setStats(int roundNum){
+        health = baseHealth + healthIncreasePerRound * (roundNum - 1);
+        damage = baseDamage + damageIncreasePerRound * (roundNum - 1);
+    }
 }

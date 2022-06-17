@@ -241,13 +241,13 @@ public class WaveSpawner : MonoBehaviour
                     available.RemoveAt(random);
 
                     GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
+                    enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr);
                     enemy.transform.SetParent(enemiesHolder.transform);
                     UpdateNumEnemiesAlive();
                     num_spawned++;
 
                     break;
                 case "Factory":
-                    // TODO: spawn enemies in factory
                     GameObject spawned = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), Quaternion.identity);
                     spawned.transform.SetParent(enemiesHolder.transform);
                     num_spawned++;
