@@ -42,12 +42,22 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     private GameObject currencyHolder;
 
+    private Rigidbody body;
+
     private NavMeshAgent navMeshAgent;
+
+    private Vector3 playerOffset;
+
+    [SerializeField]
+    private LayerMask layerMask;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        //layerMask = new LayerMask();
+        playerOffset = new Vector3(0f, 1f, 0f);
+        body = GetComponent<Rigidbody>();
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
@@ -63,7 +73,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
             moveSpeed = 0;
-            navMeshAgent.isStopped = true;
+            
+            //navMeshAgent.isStopped = true;
+            navMeshAgent.enabled = false;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
                 DropCurrency();
@@ -75,7 +87,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
         {
             //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1);
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.6f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 > 0.4f && !alreadyShot)
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.7f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 > 0.4f && !alreadyShot)
             {
                 Shoot();
             }
@@ -100,8 +112,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
             }*/
         }
 
-        if (Vector3.Distance(transform.position, playerTransform.position) <= range){
-            navMeshAgent.isStopped = true;
+        if (Vector3.Distance(transform.position, playerTransform.position) <= range && hasLineOfSightToPlayer()){
+            // navMeshAgent.isStopped = true;
+            navMeshAgent.enabled = false;
             transform.LookAt(playerTransform);
 
             upDir = transform.forward.y;
@@ -112,8 +125,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
             animator.SetBool("is_walking", false);
             animator.SetBool("is_shooting", true);
         } else {
+            // navMeshAgent.isStopped = false;
+            navMeshAgent.enabled = true;
             navMeshAgent.SetDestination(playerTransform.position);
-            navMeshAgent.isStopped = false;
             transform.LookAt(playerTransform);
 
             upDir = transform.forward.y;
@@ -206,6 +220,23 @@ public class RangedEnemyBehaviour : MonoBehaviour
                 Debug.Log("Dropped currency");
                 currency.transform.SetParent(currencyHolder.transform);
             }
+        }
+    }
+
+    private bool hasLineOfSightToPlayer()
+    {
+        RaycastHit hit;
+        Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
+        if (Physics.Linecast(transform.position + bulletOffset, playerTransform.position + playerOffset, out hit, layerMask)){
+            Debug.Log("Raycast hit!");
+            Debug.Log(hit.transform.gameObject.tag);
+            if (hit.transform.gameObject.tag == "Player"){
+                return true;
+            }
+            return false;
+        } else {
+            Debug.Log("Raycast failed!");
+            return false;
         }
     }
 

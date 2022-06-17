@@ -168,7 +168,7 @@ public class WaveSpawner : MonoBehaviour
         // iterate enemiesHolder and check if enemies animation is not death
         foreach (Transform child in enemiesHolder.transform)
         {
-            if (!child.Find("Robot_Animated_basic").GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Death"))
+            if (!child.GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Death"))
             {
                 count++;
             }
