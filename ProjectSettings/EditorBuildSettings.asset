@@ -14,5 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Factory.unity
     guid: 9a3d3c8dd8e9aa44eb17ba2731c307a6
+  - enabled: 1
+    path: Assets/Scenes/Rumble.unity
+    guid: f19e755e14f217546ab52b95ecfc7e1d
+  - enabled: 1
+    path: Assets/Scenes/Forest.unity
+    guid: c3cb29bdd69f93a4fa61c0d16bf22300
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
