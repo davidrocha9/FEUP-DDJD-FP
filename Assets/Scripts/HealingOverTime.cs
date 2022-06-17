@@ -36,6 +36,7 @@ public class HealingOverTime : MonoBehaviour
         timeAccumulator += Time.deltaTime;
 
         if (timeAccumulator >= healingWaitTime && !coroutineActive){
+            healingCoroutine = TriggerHeal();
             StartCoroutine(healingCoroutine);
             coroutineActive = true;
         }

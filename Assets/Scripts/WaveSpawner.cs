@@ -240,7 +240,8 @@ public class WaveSpawner : MonoBehaviour
                     // remove position from available list
                     available.RemoveAt(random);
 
-                    GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
+                    //GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
+                    GameObject enemy = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), new Quaternion(0, 0, 0, 0));
                     enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr);
                     enemy.transform.SetParent(enemiesHolder.transform);
                     UpdateNumEnemiesAlive();

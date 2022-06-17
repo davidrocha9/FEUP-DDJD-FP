@@ -103,10 +103,6 @@ public class GunBehaviour : MonoBehaviour
     public void Shoot(Vector2 shootingSpreadVec)
     {
         // print gameobject layer
-        Debug.Log(gameObject.layer);
-
-        Debug.Log("Spread: " + shootingSpreadVec);
-        Debug.Log("Point: " + (screenCenter + shootingSpreadVec));
         
         Debug.Log("Shooting");
         if (currentAmmo <= 0 | reloading){

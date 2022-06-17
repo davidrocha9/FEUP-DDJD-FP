@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class EnemyBehaviour : MonoBehaviour
     
     private GameObject enemies;
 
+    private NavMeshAgent navMeshAgent;
+
+    public ObstacleAvoidanceType AvoidanceType;
+
     // textmeshprougui with damage on hit
     [SerializeField]
     private TextMeshProUGUI damageText;
@@ -36,14 +41,19 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
         damage = baseDamage;
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
+
+        navMeshAgent.obstacleAvoidanceType = AvoidanceType;
+        navMeshAgent.avoidancePriority = Random.Range(0, 100);
         
         // Generate random float move speed between 1 and 3 with different random seed for each enemy
         moveSpeed = Random.Range(1f,3f);
+        navMeshAgent.speed = moveSpeed;
     }
 
     // Update is called once per frame
@@ -53,6 +63,7 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
+            navMeshAgent.enabled = false;
             moveSpeed = 0;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
@@ -90,19 +101,22 @@ public class EnemyBehaviour : MonoBehaviour
             animator.speed = moveSpeed / 3.0f;
         }
 
-        if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){            
+        if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){
+            navMeshAgent.enabled = true;
+            navMeshAgent.SetDestination(playerTransform.position);         
             transform.LookAt(playerTransform);
 
             Vector3 eulerAngles = transform.rotation.eulerAngles;
             eulerAngles = new Vector3(0, eulerAngles.y, 0);
             transform.rotation = Quaternion.Euler(eulerAngles);
 
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            // transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
             animator.SetBool("is_attacking", false);
             animator.SetBool("is_running", true);
             
         } else {
+            navMeshAgent.enabled = false; 
             animator.SetBool("is_running", false);
             animator.SetBool("is_attacking", true);
         }
