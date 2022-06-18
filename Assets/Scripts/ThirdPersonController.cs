@@ -94,6 +94,7 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         public int currencyCounter = 0;
+        public GameObject WeaponShopUI;
         
 
         // timeout deltatime
@@ -355,14 +356,18 @@ namespace StarterAssets
         private void WeaponShop(){
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
-            if (Physics.Raycast(ray, out hit, 20f, aimColliderMask))
+            GameObject UItext = WeaponShopUI.transform.GetChild(0).gameObject;
+            if (Physics.Raycast(ray, out hit, 10f, aimColliderMask))
             {
                 if (hit.collider.gameObject.name == "AR")
                 {
                     ARMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
+ 
                     if (!gunArsenal.Contains(AR))
                     {
                         if(weaponCurrency >= AR.weaponPrice){
+                            UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR (Cost: " + AR.weaponPrice + ")";
+                            WeaponShopUI.SetActive(true);
                             ARMesh.material.color = Color.green;
                             if (_input.interact)
                             {
@@ -378,17 +383,26 @@ namespace StarterAssets
                         }
                     }
                     else{
+                        UItext.GetComponent<Text>().text = "Already acquired Tango-45 AR";
+                        WeaponShopUI.SetActive(true);
                         ARMesh.material.color = Color.red;
                     }
                 }
                 else if (hit.collider.gameObject.name == "ARAmmo"){
+                    
                     if(weaponCurrency >= AR.ammoPrice & gunArsenal.Contains(AR)){
+                        UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR Ammo (Cost: " + AR.ammoPrice + ")";
+                        WeaponShopUI.SetActive(true);
                         if(_input.interact){
                             if(AR.BuyAmmo(1)){                            
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
                             }
                         }
+                    }
+                    else{
+                        UItext.GetComponent<Text>().text = "Tango-45 AR not acquired";
+                        WeaponShopUI.SetActive(true);
                     }
                 }
                 else if (hit.collider.gameObject.name == "SG")
@@ -397,6 +411,8 @@ namespace StarterAssets
                     if (!gunArsenal.Contains(SG))
                     {
                         if(weaponCurrency >= SG.weaponPrice){
+                            UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG (Cost: " + SG.weaponPrice + ")";
+                            WeaponShopUI.SetActive(true);
                             SGMesh.material.color = Color.green;
                             if (_input.interact)
                             {
@@ -408,21 +424,30 @@ namespace StarterAssets
                             }
                         }
                         else{
+                            
                             SGMesh.material.color = Color.red;
                         }
                     }
                     else{
+                        UItext.GetComponent<Text>().text = "Already acquired Baligant XU772 SG";
+                        WeaponShopUI.SetActive(true);
                         SGMesh.material.color = Color.red;
                     }
                 }
                 else if (hit.collider.gameObject.name == "SGAmmo"){
                     if(weaponCurrency >= SG.ammoPrice & gunArsenal.Contains(SG)){
+                        UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
+                        WeaponShopUI.SetActive(true);
                         if(_input.interact){
                             _input.interact = false;
                             if(SG.BuyAmmo(1)){
                                 weaponCurrency -= SG.ammoPrice;
                             }
                         }
+                    }
+                    else{
+                        UItext.GetComponent<Text>().text = "Baligant XU772 SG not acquired";
+                        WeaponShopUI.SetActive(true);
                     }
                 }
                 /*else if (hit.collider.gameObject.name == "RL")
@@ -469,6 +494,7 @@ namespace StarterAssets
                     /*if(RLMesh != null){
                         RLMesh.material.color = RL.GetComponent<MeshRenderer>().material.color;
                     }*/
+                    WeaponShopUI.SetActive(false);
                 }
             }
         }
