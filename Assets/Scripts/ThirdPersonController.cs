@@ -188,6 +188,8 @@ namespace StarterAssets
         private int hitsNumber = 0;
         private int weaponCurrency = 0;
         private float fallingY = -1234.56789f;
+        private float teleportedTime = 0f;
+        private bool recentlyTeleported = false;
 
         private GameObject[] rumblePlanes;
 
@@ -286,6 +288,13 @@ namespace StarterAssets
             SwitchWeapon();
             StartRound();
             Reload();
+
+            if(recentlyTeleported && Time.time - teleportedTime > 0.5f){
+                for(int i = 0; i<rumblePlanes.Length; i++){
+                    rumblePlanes[i].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                }
+                recentlyTeleported = false;
+            }
 
 
             if (!canFire){
@@ -752,7 +761,7 @@ namespace StarterAssets
                 if(fallingY != -1234.56789f){
                     float distanceFallen = fallingY - transform.position.y;
                     fallingY = -1234.56789f;
-                    Debug.Log("You fell " + distanceFallen + " units");
+                    //Debug.Log("You fell " + distanceFallen + " units");
                     if(distanceFallen > 4){
                         TakeDamage(1*Mathf.RoundToInt(distanceFallen));
                     }
@@ -942,7 +951,7 @@ namespace StarterAssets
                 TakeDamage(Health-1);
                 TakeDamage(Health);
             }
-            if(other.gameObject.tag == "RumblePlane"){
+            if(other.gameObject.tag == "RumblePlane" && !recentlyTeleported){
                 // find the index of the other object in the rumble planes array
                 int randomRumblePlane = Random.Range(0, rumblePlanes.Length);
                 while(rumblePlanes[randomRumblePlane].name == other.gameObject.name){
@@ -951,8 +960,10 @@ namespace StarterAssets
                 // teleport the player to the randomRumblePlane
                 _controller.enabled = false;
                 transform.position = rumblePlanes[randomRumblePlane].gameObject.GetComponent<RumblePlane>().getTeleportPosition();
-                _controller.enabled = true;                
-                            
+                _controller.enabled = true;
+                other.isTrigger = false;
+                teleportedTime = Time.time;
+                recentlyTeleported = true;
             }
         }
 

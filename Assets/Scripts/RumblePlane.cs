@@ -8,56 +8,67 @@ public class RumblePlane : MonoBehaviour
     public float xLimit;
     public float yLimit;
     public float zLimit;
-    private Vector3 teleportPosition;
+    private int startZ;
+    private Vector3 teleportPosition = Vector3.zero;
 
     //public Vector3 spawnPosition;  
     void Awake(){
-        zrotation = Random.Range(0, 360);
+        zrotation = Random.Range(-180, 181);
         // apply rotation to the transform of the game object
         transform.Rotate(0, 0, zrotation);
-        float increaseX = 0.0f;
-        float increaseY = 0.0f;
         int xfactor = 1;
-        int yfactor = 0;
-        int counter = 0;
-        while(Physics.CheckSphere(new Vector3(transform.position.x + increaseX, 5.0f + increaseY, transform.position.z+1.0f), 0.5f)){
-            increaseX += 0.1f*xfactor;
-            increaseY += 0.05f*yfactor;
-            xfactor = -xfactor;
-            counter += 1;
-            if(increaseX >= xLimit && yfactor == 0){
-                //increaseX = 0.0f;
-                xfactor = 0;
-                yfactor = 1;
-            }
-            else if(increaseY >= yLimit && xfactor == 0){
-                //increaseY = 0.0f;
-                xfactor = 1;
-                yfactor = 1;
-            }
-            if(Mathf.Abs(increaseX) >= xLimit && increaseY >= yLimit){
-                Debug.Log("No position found");
-                return;
-            }
-            if(counter > 100){
-                Debug.Log("No position found");
-                return;
-            }
-
+        int counter = 1;
+        if(zrotation >= 0){
+            this.gameObject.transform.GetChild(0).gameObject.transform.Translate(new Vector3(0.0f,1.35f,0.0f));
         }
-        teleportPosition = new Vector3(transform.position.x + increaseX, 3.0f + increaseY, transform.position.z + 1.0f);
-        Debug.Log(teleportPosition);
+        else{
+            this.gameObject.transform.GetChild(0).gameObject.transform.Translate(new Vector3(0.0f,-1.35f,0.0f));
+        }
+        for(float x = 0f; Mathf.Abs(x)<=(xLimit+0.1f); x += 0.1f*xfactor){
+            for(float y = 0; y <= yLimit; y+=0.05f){
+                if(!Physics.CheckSphere(new Vector3(transform.position.x + x, y, transform.position.z+1.0f), 0.75f)){
+                    teleportPosition = new Vector3(transform.position.x + x, 3.0f + y, transform.position.z + 1.0f);
+                    Debug.Log(teleportPosition);
+                    return;
+                }
+            }
+            if(x >= xLimit){
+                xfactor = -1;
+                x = 0f;
+            }
+        }
+        if(teleportPosition == Vector3.zero){
+            teleportPosition = getSpawnPosition();
+        }
     }
 
     public Vector3 getSpawnPosition(){
-        int startZ = 0;
+        startZ = 0;
         if(transform.position.z > 50){
             startZ = 100;
         }
         else if(transform.position.z < -50){
             startZ = -100;
         }
-        Vector3 spawnPosition = new Vector3(10*Random.Range(-1,2), 3, startZ+10*Random.Range(-1,2));
+        int spawnZ = 0;
+        if(teleportPosition.z - startZ > 0){
+            spawnZ = startZ-10;
+        }
+        else{
+            spawnZ = startZ+10;
+        }
+        Vector3[] spawnPositions = new [] {new Vector3(-10,3,startZ-10), new Vector3(0,3,startZ-10), new Vector3(10,3,startZ-10), new Vector3(-10,3,startZ+10), new Vector3(0,3,startZ+10), new Vector3(10,3,startZ+10)};
+        Transform childTransform = this.gameObject.transform.GetChild(0).gameObject.transform;
+        Vector3 spawnPosition = Vector3.up;
+        float maxdist = 0;
+        foreach(Vector3 pos in spawnPositions){
+            float dist = Vector3.Distance(childTransform.position, pos);
+            if(maxdist < dist){
+                spawnPosition = pos;
+                maxdist = dist;
+            }
+        }
+
         return spawnPosition;
     }
 
@@ -70,8 +81,7 @@ public class RumblePlane : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {
-        
+    {        
     }
 
     // Update is called once per frame
