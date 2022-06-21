@@ -306,6 +306,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e50bb480f9584744082eafd30b4e2fca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -560,10 +572,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 3
+  m_CollisionDetection: 1
 --- !u!136 &3743126699435421635
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -609,7 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c424affa30da8ef4cb590ab7c981639c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 100
+  baseHealth: 10
   baseDamage: 5
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
@@ -617,28 +629,6 @@ MonoBehaviour:
   currencyPrefab: {fileID: 2085789137917411795, guid: c6ffb418751f5454aae99058014afa5a, type: 3}
   AvoidanceType: 4
   damageText: {fileID: 678008008990873827}
---- !u!195 &4782845441746011952
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4554027865566239539}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!135 &8432703954479249097
 SphereCollider:
   m_ObjectHideFlags: 0

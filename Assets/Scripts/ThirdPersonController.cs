@@ -715,7 +715,11 @@ namespace StarterAssets
 
                 Vector2 shootingSpreadVec = new Vector2(0, 0);
                 if (!_input.aim){
-                    shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread), Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread));
+                    if (!Grounded){
+                        shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread*2, gunArsenal[selectedGun].shootingSpread*2), Random.Range(-gunArsenal[selectedGun].shootingSpread*2, gunArsenal[selectedGun].shootingSpread*2));
+                    } else {
+                        shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread), Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread));
+                    }
                 }
 
                 // Rotate the player to face where he is aiming

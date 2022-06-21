@@ -104,7 +104,7 @@ public class GunBehaviour : MonoBehaviour
     {
         // print gameobject layer
         
-        Debug.Log("Shooting");
+        //Debug.Log("Shooting");
         if (currentAmmo <= 0 | reloading){
             return;
         }

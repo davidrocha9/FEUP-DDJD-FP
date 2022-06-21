@@ -38,21 +38,30 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI damageText;
 
+    private bool enableNavMesh = false;
+
+    private Rigidbody body;
+
     // Start is called before the first frame update
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        body = GetComponent<Rigidbody>();
+        //navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
         damage = baseDamage;
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
-
-        navMeshAgent.obstacleAvoidanceType = AvoidanceType;
-        navMeshAgent.avoidancePriority = Random.Range(0, 100);
         
         // Generate random float move speed between 1 and 3 with different random seed for each enemy
         moveSpeed = Random.Range(1f,3f);
+        
+    }
+
+    void initNavMeshAgent()
+    {
+        navMeshAgent.obstacleAvoidanceType = AvoidanceType;
+        navMeshAgent.avoidancePriority = Random.Range(0, 100);
         navMeshAgent.speed = moveSpeed;
     }
 
@@ -61,9 +70,19 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (transform == null)
             return;
-        
+        //Debug.Log("Y: " + transform.position.y);
+        //Debug.Log("EnableNavMesh: " + enableNavMesh);
+        if (transform.position.y <= 3 && !enableNavMesh && IsOnNavMesh()){
+            gameObject.AddComponent<NavMeshAgent>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            initNavMeshAgent();
+            enableNavMesh = true;
+            body.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            body.isKinematic = true;
+        }
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
-            navMeshAgent.enabled = false;
+            if (enableNavMesh)
+                navMeshAgent.enabled = false;
             moveSpeed = 0;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
@@ -102,21 +121,27 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){
-            navMeshAgent.enabled = true;
-            navMeshAgent.SetDestination(playerTransform.position);         
+            if (enableNavMesh){
+                navMeshAgent.enabled = true;
+                navMeshAgent.SetDestination(playerTransform.position);
+                //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
+            }
+                        
             transform.LookAt(playerTransform);
 
             Vector3 eulerAngles = transform.rotation.eulerAngles;
             eulerAngles = new Vector3(0, eulerAngles.y, 0);
             transform.rotation = Quaternion.Euler(eulerAngles);
 
-            // transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            if (!enableNavMesh)
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
             animator.SetBool("is_attacking", false);
             animator.SetBool("is_running", true);
             
         } else {
-            navMeshAgent.enabled = false; 
+            if (enableNavMesh)
+                navMeshAgent.enabled = false; 
             animator.SetBool("is_running", false);
             animator.SetBool("is_attacking", true);
         }
@@ -175,6 +200,25 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.Log("ayo");
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
         }
+    }
+
+    public bool IsOnNavMesh()
+    {
+        NavMeshHit hit;
+
+        // Check for nearest point on navmesh to agent, within onMeshThreshold
+        if (NavMesh.SamplePosition(transform.position, out hit, 1f, NavMesh.AllAreas))
+        {
+            // Check if the positions are vertically aligned
+            if (Mathf.Approximately(transform.position.x, hit.position.x)
+                && Mathf.Approximately(transform.position.z, hit.position.z))
+            {
+                // Lastly, check if object is below navmesh
+                return transform.position.y >= hit.position.y;
+            }
+        }
+
+        return false;
     }
 
     public void setStats(int roundNum){
