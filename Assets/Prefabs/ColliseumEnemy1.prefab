@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c424affa30da8ef4cb590ab7c981639c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 10
+  baseHealth: 100
   baseDamage: 5
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
